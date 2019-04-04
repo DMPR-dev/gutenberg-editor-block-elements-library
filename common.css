@@ -1,0 +1,81 @@
+/*
+ *
+ *
+ *
+ * BACK-END PART
+ *
+ *
+ *
+ */
+
+.heading-title-preview
+{
+    background-color: rgba(230,49,53,0.85) !important;
+    color: white !important;
+    margin-top: 5% !important; 
+    padding: 5px;
+    border-radius: 5px;
+}
+.image-img-container
+{
+	position: relative;
+}
+.image-img-go-up-button, .image-img-go-down-button,.image-img-id-showcase,.image-img-edit-heading
+{
+	position: absolute;
+	cursor: pointer;
+	background:rgba(0,0,0,0.5);
+	padding: 4px;
+	color:white;
+	transition: 0.5s background;
+
+	-webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+.image-img-go-up-button:hover, .image-img-go-down-button:hover,.image-img-id-showcase:hover,.image-img-edit-heading:hover
+{
+	background-color: black;
+}
+.image-img-id-showcase
+{
+	cursor: initial;
+	left:0;
+	top:0;
+	border-bottom-right-radius: 5px;
+}
+.image-img-go-up-button
+{
+	right:0;
+	top:0;
+	border-bottom-left-radius: 5px;
+}
+.image-img-go-down-button
+{
+	right:0;
+	bottom:0;
+	border-top-left-radius: 5px;
+}
+.image-img-edit-heading
+{
+	left:0;
+	bottom:0;
+	border-top-right-radius: 5px;
+}
+.image-object-container
+{
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border:1px dashed silver;
+	padding: 5px;
+	background:rgb(225,225,225);
+}
+.custom-block-button
+{
+	justify-content: center;
+	width: 100%;
+}
