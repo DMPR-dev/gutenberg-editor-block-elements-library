@@ -44,8 +44,9 @@
                 text:{type:"string"},
                 dummy:{type:"string"},
                 background:{type:"string"},
-                images:{type:"array"},
-                links:{type:"array"}
+                imagesssss:{type:"array"},
+                linkssssss:{type:"array"},
+                bg_color:{type:"string"}
             },
         // edit callback - displayed on the editor
         edit: function(props) 
@@ -58,22 +59,22 @@
                     [
                         el(panelBody,{title:"Background"},
                         [
-                            // get needed elements for setting - background
-                            _common.input.generate_image_input("background")
+                            _common.input.image("background"),
+                            el('hr',{}),
+                            _common.input.color("bg_color", "Select color:")
                         ]),
                         el(panelBody,{title:"Gallery"},
                         [
-                            // get needed elements for setting - gallery with given object sample
-                            _common.gallery.init(object_sample)
+                            // here we just pass the name of variable that will be used to store the images array
+                            _common.gallery.init(object_sample,"imagesssss")
                         ]),
                         el(panelBody,{title:"Links"},
                         [
-                            // get needed elements for setting - links
-                            _common.link.init()
+                            // here we just pass the name of variable that will be used to store the links array
+                            _common.link.init("linkssssss")
                         ])
                     ]),
-                    // get needed elements for setting - text
-                    _common.input.generate_text_input("text","Text:"),
+                    _common.input.text("text","Text:"),
                 ])
         },
         // save callback - displayed on the front-end part

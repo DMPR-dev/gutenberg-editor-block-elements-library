@@ -79,3 +79,7 @@
 	justify-content: center;
 	width: 100%;
 }
+.custom-block-button:nth-child(even)
+{
+	margin-top: 10px;
+}

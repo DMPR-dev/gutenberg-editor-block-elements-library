@@ -3,55 +3,11 @@
 Library name: gutenberg-editor-block-library
 Library URI: https://github.com/l-1337-l
 Description: library for easier gutenberg editor block creation
-Version: 1.0.0
+Version: 0.0.2
 Author: Dmytro Proskurin
 Author URI: https://github.com/l-1337-l
 License: MIT
 Text Domain: gutenberg-editor-block-library
-*/
-/* SIMPLE USAGE 
-
-First step:
-Declare all needed attribues, for example text, background, dummy(required), images(required for gallery), links(required for links)
-attributes: {
-            text:{type:"string"},
-            dummy:{type:"string"},
-            background:{type:"string"},
-            images:{type:"array"},
-            links:{type:"array"}
-        },
-
-//declare object of library under 'edit' callback
-var _common = new Common(props);
-
-// generate all needed stuff for string variable with name 'text'
-// also returns needed html code for input
-_common.input.generate_text_input("text","Text:");
-
-// generate all needed stuff for string variable with name 'background', that will store image url
-// also returns needed html code for input
-_common.input.generate_image_input("background","Select Background Image");
-
-// generate all needed stuff for string image gallery
-// @object_sample - copy of object example that will be used as image
-// may contain any text properties linked to image, like caption, heading, etc.
-// required fields: url,id
-// example of object: 
-var object_sample = {
-    id:{
-        val:"",
-        caption:"ID"
-    },
-    url:{
-        val:"",
-        caption:"URL"
-    },
-    heading:{
-        val:"",
-        caption:"Heading"
-    }
-}
-_common.gallery.init(object_sample)
 */
 class Common
 {
@@ -84,10 +40,11 @@ class Input
             this.props = _props;
             this.text_box = wp.editor.RichText;
             this.el = wp.element.createElement;
+            this.ColorPicker = wp.components.ColorPicker;
         }
         else
         {
-            alert("Unalbe to initialize input object because wp is undefined!");
+            console.log("Unalbe to initialize input object because wp is undefined!");
             return undefined;
         }
     }
@@ -102,8 +59,10 @@ class Input
      * @return reactjs object
      *
      */
-    generate_text_input(name,label_text)
+    text(name,label_text)
     {
+        if(label_text == undefined) {label_text="";}
+
         var me = this;
         var update_attr = function(_value)
         {
@@ -121,6 +80,9 @@ class Input
                             })
             ]);
     }
+
+    /* IMAGE & COLOR RELATED STUFF */
+
     /*
      *
      * Generates wp media modal window
@@ -161,7 +123,7 @@ class Input
      * @return reactjs object | VOID
      *
      */
-    generate_image_input(name,label_text,callback,return_react,event)
+    image(name,label_text,callback,return_react,event)
     {
         if(return_react == undefined) {return_react=true;}
         if(label_text == undefined) {label_text="";}
@@ -173,7 +135,7 @@ class Input
             // Create WP media frame.
             var custom_file_frame = me.generate_wp_media_modal();
             // bind select event so we can pick the object of selected attachment and get its url
-            custom_file_frame.on('select', function () 
+            custom_file_frame.on('select', function() 
             {
               var attachment = custom_file_frame.state().get('selection').first().toJSON();
               if (me.current_object_container != undefined) 
@@ -184,6 +146,7 @@ class Input
                 obj.children("img").attr("src", attachment.url);
                 if(callback != undefined)
                 {
+                    // execute callback
                     callback(attachment.url);
                 }
                 else
@@ -199,6 +162,25 @@ class Input
         };
         if(return_react)
         {
+            // method that spawns 'remove image' btn if image is set
+            var spawn_del_btn = function() 
+            {
+                if(me.props.attributes[name] != undefined)
+                {
+                    return me.el('button',{className:"custom-block-button components-button editor-post-preview is-button is-default is-large",
+                        onClick:function(event)
+                        {
+                            var conf = confirm("Are you sure that you want to remove current image?");
+                            if(conf)
+                            {
+                                me.props.attributes[name] = undefined;
+                                jQuery(event.target).parent().children("div").children("img").removeAttr("src");
+                                Common.set_dummy(me.props);
+                            }
+                        }
+                    },"Remove Image");
+                }
+            }
             return this.el('div',{},
                     [
                         this.el('label',{},label_text),
@@ -206,7 +188,8 @@ class Input
                         [
                              this.el('img',{style:
                                 {
-                                    width:"100%"
+                                    width:"100%",
+                                    background:'silver'
                                 }, 
                                 src:this.props.attributes[name]
                             })
@@ -215,7 +198,10 @@ class Input
                             className:"custom-block-button components-button editor-post-preview is-button is-default is-large",
                             onClick:handle_image_change, 
                             name:name+"-selector-btn"
-                        },"Select Image")
+                        },"Select Image"),
+                        /* REMOVE IMAGE BUTTON */
+                        spawn_del_btn()
+                        
                     ])
         }
         else
@@ -225,6 +211,46 @@ class Input
                 handle_image_change(event);
             }
         }
+    }
+    /*
+     *
+     * Generates all needed stuff for simple color input
+     *
+     * @name - STRING - name of attribute that will be associated with input value
+     *
+     * @label_text - STRING - text that will be displayed on the label under input
+     *
+     * @return reactjs object
+     *
+     */
+    color(name,label_text)
+    {
+        if(label_text == undefined){label_text="";}
+
+        var me = this;
+        var color_change_handler = function(color)
+        {
+            me.props.attributes[name] = "rgba("+color.rgb.r + "," + color.rgb.g+","+color.rgb.b+","+color.rgb.a+")";
+            Common.set_dummy(me.props);
+        }
+        var spawn_del_btn = function() 
+        {
+            if(me.props.attributes[name] != undefined)
+            {
+                return me.el('button',{className:"custom-block-button components-button editor-post-preview is-button is-default is-large",
+                    onClick:function(event)
+                    {
+                        me.props.attributes[name] = undefined;
+                        Common.set_dummy(me.props);
+                    }
+                },"Remove Color");
+            }
+        }
+        return [
+            this.el('label',{},label_text),
+            this.el(this.ColorPicker,{color:this.props.attributes[name],onChangeComplete:color_change_handler}),
+            spawn_del_btn()
+        ]
     }
 }
 class Gallery
@@ -241,7 +267,7 @@ class Gallery
         }
         else
         {
-            alert("Unalbe to initialize gallery object because wp is undefined!");
+            console.log("Unalbe to initialize gallery object because wp is undefined!");
             return undefined;
         }
     }
@@ -254,10 +280,12 @@ class Gallery
      * @return array of reactjs objects
      *
      */
-    init(object_sample)
+    init(object_sample,_variable_name)
     {
         if(object_sample == undefined){object_sample={};}
+        if(_variable_name == undefined){console.log("No variable name has been set for gallery. Gallery will work, but it will be unable to save any changes.");}
         this.image_object_sample = object_sample;
+        this.variable_name = _variable_name;
 
         return [this.display_images_backend(),this.add_image_btn()]
     }
@@ -305,15 +333,15 @@ class Gallery
         // objects will be pushed here
         var elements = [];
         // verify that images is valid array
-        if(this.props.attributes.images == undefined)
+        if(this.props.attributes[this.variable_name] == undefined)
         {
-            this.props.attributes.images = [];
+            this.props.attributes[this.variable_name] = [];
         }
 
         var me = this;
 
         // get images
-        var images = this.props.attributes.images;
+        var images = this.props.attributes[this.variable_name];
         // loop through the objects and fill object array with reactjs objects (html)
         for(var i = 0; i<images.length; i++)
         {
@@ -362,9 +390,9 @@ class Gallery
     {
         var com = new Common(this.props);
         var me = this;
-        if(this.props.attributes.images == undefined)
+        if(this.props.attributes[this.variable_name] == undefined)
         {
-            this.props.attributes.images = [];
+            this.props.attributes[this.variable_name] = [];
         }
         var callback = function(url)
         {
@@ -388,10 +416,10 @@ class Gallery
                             }
                         }
                     }
-                    if(me.props.attributes.images.length > 0)
+                    if(me.props.attributes[me.variable_name].length > 0)
                     {
                         // if there are objects, then pick id of length of array
-                        new_object.id.val =  me.props.attributes.images.length-1;
+                        new_object.id.val =  me.props.attributes[me.variable_name].length-1;
                         // and iterate id until there are no object with such id
                         while(me.find_image_by_id(new_object.id.val) != undefined)
                         {
@@ -403,17 +431,17 @@ class Gallery
                         // if array is empty, then just pick index 0
                         new_object.id.val = 0;
                     }
-                    me.props.attributes.images.push(new_object);
+                    me.props.attributes[me.variable_name].push(new_object);
                     Common.set_dummy(me.props);
                 }
 
             }
             else
             {
-                alert("Unalbe to add image to gallery because image object sample is not set!");
+                console.log("Unalbe to add image to gallery because image object sample is not set!");
             }
         }
-        com.input.generate_image_input("","",callback,false,event);
+        com.input.image("","",callback,false,event);
     }
     /*
      *
@@ -450,7 +478,7 @@ class Gallery
                     this.el('button',{onClick:
                         function()
                         {
-                           me.delete_image(me.props.attributes.images[_index].id.val)
+                           me.delete_image(me.props.attributes[me.variable_name][_index].id.val)
                     },className:"custom-block-button components-button editor-post-preview is-button is-default is-large"},"Delete Image")
                 ]);
         }
@@ -467,7 +495,7 @@ class Gallery
         // check if image_id is set
         if(image_id != undefined)
         {
-            var images = this.props.attributes.images;
+            var images = this.props.attributes[this.variable_name];
             if(images != undefined)
             {
                 var needed_object = undefined;
@@ -539,7 +567,7 @@ class Gallery
         if(position == 1 || position == -1)
         {
             // access images array, store it in temp variable to modify
-            var images = this.props.attributes.images;
+            var images = this.props.attributes[this.variable_name];
             // find needed image that will be moved by given id
             var needed_object = this.find_image_by_id(image_id);
             if(needed_object != undefined)
@@ -556,7 +584,7 @@ class Gallery
                         images[index+position] = needed_object;
                         images[index] = temp_object;
 
-                        this.props.setAttributes({images:images});
+                        this.props.attributes[this.variable_name] = images;
                         Common.set_dummy(this.props);
                     }
                 }
@@ -573,7 +601,7 @@ class Gallery
     edit(image_id)
     {
         // store array of images in temp variable
-        var images = this.props.attributes.images;
+        var images = this.props.attributes[this.variable_name];
         // find needed object by id
         var needed_object = this.find_image_by_id(image_id);
        
@@ -598,7 +626,7 @@ class Gallery
                         }
                     }
                     
-                    this.props.setAttributes({images:images});
+                    this.props.attributes[this.variable_name] = images;
                     Common.set_dummy(this.props);
                 }
             }
@@ -614,7 +642,7 @@ class Gallery
     delete_image (image_id)
     {
         // store images array in temp variable
-        var images = this.props.attributes.images;
+        var images = this.props.attributes[this.variable_name];
         // fined needed object by id
         var needed_object = this.find_image_by_id(image_id);
         
@@ -630,7 +658,7 @@ class Gallery
                     // delete image from array
                     images.splice(index, 1);
                     // save edited array to block properties
-                    this.props.setAttributes({images:images});
+                    this.props.attributes[this.variable_name] = images;
                     Common.set_dummy(this.props);
                 }
             }
@@ -649,9 +677,23 @@ class Link
         }
         else
         {
-            alert("Unalbe to initialize link object because wp is undefined!");
+            console.log("Unalbe to initialize link object because wp is undefined!");
             return undefined;
         }
+    }
+    /*
+     *
+     * spawns reactjs element with current links plus 'add link' button
+     *
+     *
+     * @return reactjs object (element)
+     *
+     */
+    init(_variable_name)
+    {
+        if(_variable_name == undefined){console.log("No variable name has been set for links. Links system will work, but it will be unable to save any changes.");}
+        this.variable_name = _variable_name;
+        return [this.display_links(),this.spawn_link_button()]
     }
     /*
      *
@@ -668,36 +710,24 @@ class Link
     {
         if(return_index == undefined){return_index = false}
         // verify that links array is not undefined
-        if(this.props.attributes.links != undefined)
+        if(this.props.attributes[this.variable_name] != undefined)
         {
             // loop through the link array
-            for(var i = 0; i<this.props.attributes.links.length; i++)
+            for(var i = 0; i<this.props.attributes[this.variable_name].length; i++)
             {
                 // find needed object by 'url' property
                 // and return it or its index
-                if(this.props.attributes.links[i].url == url)
+                if(this.props.attributes[this.variable_name][i].url == url)
                 {
                     if(return_index)
                     {
                         return i;
                     }
-                    return this.props.attributes.links[i];
+                    return this.props.attributes[this.variable_name][i];
                 }
             }
         }
         return undefined;
-    }
-    /*
-     *
-     * spawns reactjs element with current links plus 'add link' button
-     *
-     *
-     * @return reactjs object (element)
-     *
-     */
-    init()
-    {
-        return [this.display_links(),this.spawn_link_button()]
     }
      /*
      *
@@ -711,7 +741,7 @@ class Link
     {
         var me = this;
         var elements = [];
-        var links = this.props.attributes.links;
+        var links = this.props.attributes[this.variable_name];
         // verify that links array is not undefined
         if(links != undefined)
         {
@@ -772,7 +802,7 @@ class Link
      */
     add_link()
     {
-        var current_links = this.props.attributes.links;
+        var current_links = this.props.attributes[this.variable_name];
         if(current_links == undefined)
         {
             current_links = [];
@@ -808,7 +838,7 @@ class Link
                 }
             }
         }
-        this.props.setAttributes({links:current_links});
+        this.props.attributes[this.variable_name] = current_links;
         Common.set_dummy(this.props);
     }
     /*
@@ -830,13 +860,13 @@ class Link
                 var conf = confirm("Are you sure that you want to delete url:" + url+"?");
                 if(conf)
                 {
-                    var links = this.props.attributes.links;
+                    var links = this.props.attributes[this.variable_name];
                     var index = -1;
                     index = links.indexOf(link_object);
                     if(index > -1)
                     {
                         links.splice(index, 1);
-                        this.props.setAttributes({links:links});
+                        this.props.attributes[this.variable_name] = links;
                         Common.set_dummy(this.props);
                     }
                 }
@@ -860,13 +890,13 @@ class Link
             if(link_object_index != undefined && link_object_index>-1)
             {
                 // store as temp array          
-                var links = this.props.attributes.links;
+                var links = this.props.attributes[this.variable_name];
                 var _prompt = prompt("Enter link URL:",links[link_object_index].url);
                 links[link_object_index].url = _prompt;
                 _prompt = prompt("Enter link name:",links[link_object_index].name);
                 links[link_object_index].name = _prompt;
 
-                this.props.setAttributes({links:links});
+                this.props.attributes[this.variable_name] = links;
                 Common.set_dummy(this.props);
             }
         }
