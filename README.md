@@ -1,4 +1,5 @@
-﻿# Gutenberg Block Elements Library
+﻿
+# Gutenberg Block Elements Library
 Simple library of classes for simpler block creation
 
 # Capabilities
@@ -21,12 +22,23 @@ Simple library of classes for simpler block creation
 # Installation
 Edit file ***common-setup.php*** and make sure to set correct path to the script and style files OR just create directory '*extensions*' in the root of your theme and put '*gutenberg*' folder inside of it.
 After that just use `require_once(PATH_TO_COMMON-SETUP.PHP);`
+Example:
+
+    require_once(get_template_directory() . '/extensions/gutenberg/common-setup.php');
+    // register javscript for test block
+    // and enqueue common library:
+    wp_register_script(
+        'gutenberg-block-test-script',
+        get_template_directory_uri() . '/extensions/gutenberg/block.js',
+        array('_gutenberg-common-lib')
+    );
+
 inside the method where you register block on the server side. And then just link it to your block script:
 
 
     wp_register_script(
             'gutenberg-block-test-script',
-    	     get_template_directory_uri() . '/extensions/gutenberg/block.js',
+             get_template_directory_uri() . '/extensions/gutenberg/block.js',
             array('_gutenberg-common-lib')
         );
 
@@ -35,7 +47,7 @@ inside the method where you register block on the server side. And then just lin
 Use attribute 
 
     dummy:{
-	    type:"string"
+        type:"string"
     }
 on each block for correct work of library, otherwise some changes can stay unsaved!
 Example:
@@ -76,8 +88,8 @@ Example:
     edit: function(props) 
         {
             var _common = new Common(props);
-		    return _common.input.text.init("text","Text:")
-	    }
+            return _common.input.text.init("text","Text:")
+        }
 
  
 @name - "text" - name of variable to store the input value
@@ -103,8 +115,8 @@ Example:
     edit: function(props) 
         {
             var _common = new Common(props);
-		    return _common.input.select.init("side","Select side:",["left","right"])
-	    }
+            return _common.input.select.init("side","Select side:",["left","right"])
+        }
 
  
 @name - "text" - name of variable to store the input value
@@ -130,8 +142,8 @@ Example:
     edit: function(props) 
         {
             var _common = new Common(props);
-		    return _common.input.datetime.init("date_time","Select date & time:")
-	    }
+            return _common.input.datetime.init("date_time","Select date & time:")
+        }
 
  How is datetime stored? As string:
 
@@ -154,7 +166,7 @@ Signature:
 Example:
    
 
-	attributes: {
+    attributes: {
                 dummy:{type:"string"},
                 background:{type:"string"}
     },
@@ -162,8 +174,8 @@ Example:
      edit: function(props) 
         {
             var _common = new Common(props);
-		    return _common.input.image.init("background")
-	    }
+            return _common.input.image.init("background")
+        }
 
  
 @name - "text" - name of variable to store the input value
@@ -176,14 +188,14 @@ Example with event & callback:
     /* add_image is called on click */
     add_image(event)
     {
-	    ...
-	    var com = new Common(this.props);
-	    ...
-	    var callback = function(url)
+        ...
+        var com = new Common(this.props);
+        ...
+        var callback = function(url)
         {
-	        ...
+            ...
         }
-	    com.input.image.init("","",callback,false,event);
+        com.input.image.init("","",callback,false,event);
     }
 
 Returns VOID | REACTJS  object with all needed stuff for image input. So, user only needs to select any image | opens modal window
@@ -207,8 +219,8 @@ Example:
     edit: function(props) 
         {
             var _common = new Common(props);
-	        return _common.input.color.init("bg_color", "Select color:")
-	    }
+            return _common.input.color.init("bg_color", "Select color:")
+        }
 
  
 @name - "text" - name of variable to store the input value
@@ -236,8 +248,8 @@ Example:
     edit: function(props) 
         {
             var _common = new Common(props);
-	        return _common.input.checkbox.init("checkbox_test","Check me!")
-	    }
+            return _common.input.checkbox.init("checkbox_test","Check me!")
+        }
 
  
 @name - "text" - name of variable to store the input value
@@ -254,19 +266,19 @@ Returns REACTJS object with all needed stuff for checkbox input. So, user only n
 
        _common.input.text.callback = (props,object) =>
        {
-	       /* EXAMPLE */
-	       if(!object.val.includes("px"))
+           /* EXAMPLE */
+           if(!object.val.includes("px"))
            {
                object.val +="px";
            }
        },
        _common.input.select.callback = (props,object) =>
        {
-	       object.value = "right";
+           object.value = "right";
        },
        _common.input.image.callback = (props,object) =>
        {
-	       object.value = "http://example.com/image.jpg";
+           object.value = "http://example.com/image.jpg";
        },
        ...
 # Usage: GALLERY
@@ -290,7 +302,7 @@ Example:
         {
             var _common = new Common(props);
             return _common.gallery.init(object_sample,"imagesssss")
-	    }
+        }
 
     
 
@@ -300,22 +312,22 @@ Example:
 Object example:
 
         var object_sample = {
-			        id:
-			        {
-			            val:"",
-			            caption:"ID"
-			        },
-			        url:
-			        {
-			            val:"",
-			            caption:"URL"
-			        },
-			        heading:
-			        {
-			            val:"",
-			            caption:"Heading"
-			        }
-			    }
+                    id:
+                    {
+                        val:"",
+                        caption:"ID"
+                    },
+                    url:
+                    {
+                        val:"",
+                        caption:"URL"
+                    },
+                    heading:
+                    {
+                        val:"",
+                        caption:"Heading"
+                    }
+                }
 Fields like: ***id*** and ***url*** are ***REQUIRED***, the rest are optional, developer can specify any field he needs, but the structure `property:{val:"",caption:""}` has to be saved.
 For each custom property user will receive prompt window asking to fill the value when the image is selected:![
 ](https://i.imgur.com/0w0ImQJ.png)
@@ -334,16 +346,16 @@ Signature:
 
 Example:
    
-	attributes: {
-				dummy:{type:"string"}
+    attributes: {
+                dummy:{type:"string"}
                 linkssssss:{type:"array"}
     },
     ...
     edit: function(props) 
         {
-	        var _common = new Common(props);
-		    return _common.link.init("linkssssss")
-		}
+            var _common = new Common(props);
+            return _common.link.init("linkssssss")
+        }
 
  
 @_variable_name - "text" - name of variable to store the links array
