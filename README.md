@@ -7,6 +7,7 @@ Simple library of classes for simpler block creation
  - Input: DATETIME
  - Input: IMAGE
  - Input: COLOR
+ - Input: CHECKBOX
  - Custom Image Library (gallery)
  - Custom Links Library
 
