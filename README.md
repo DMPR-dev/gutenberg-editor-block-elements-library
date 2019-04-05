@@ -274,10 +274,7 @@ Returns REACTJS object with all needed stuff for gallery input. So, user only ne
 User will have an ability to move image up/down inside of array, edit all custom properties(actually, any properties different from "url" and "id"), to delete image.
 <br>
 ![
-](https://i.imgur.com/1juTtyE.png)
-<br>
-![
-](https://i.imgur.com/P3fBaLj.png)
+](https://i.imgur.com/90baJ1e.png)
 # Usage: LINKS
 Signature:
  
