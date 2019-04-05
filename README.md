@@ -86,7 +86,7 @@ Example:
 
  
 @name - "text" - name of variable to store the input value
-@label_text(optional, may be ' ') - "text:" - text that will be displayed above the input
+<br>@label_text(optional, may be ' ') - "text:" - text that will be displayed above the input
 
 Returns REACTJS object with all needed stuff for text input. So, user only needs to enter the text. 
 ![
@@ -113,8 +113,8 @@ Example:
 
  
 @name - "text" - name of variable to store the input value
-@label_text(optional, may be ' ') - "text:" - text that will be displayed above the input
-@values - array - specify the options for select input here
+<br>@label_text(optional, may be ' ') - "text:" - text that will be displayed above the input
+<br>@values - array - specify the options for select input here
 
 Returns REACTJS object with all needed stuff for select input. So, user only needs to select a value. 
 ![
@@ -143,7 +143,7 @@ Example:
      2019-04-12T11:56:59
 
 @name - "text" - name of variable to store the input value
-@label_text(optional, may be ' ') - "text:" - text that will be displayed above the input
+<br>@label_text(optional, may be ' ') - "text:" - text that will be displayed above the input
 
 Returns REACTJS object with all needed stuff for date time input. So, user only needs to select the needed date and time. 
 
@@ -172,10 +172,10 @@ Example:
 
  
 @name - "text" - name of variable to store the input value
-@label_text - "text:" - text that will be displayed above the input
-@callback(optional) - function - function that will be executed after image selected, used in Gallery object mostly. Argument to callback is @url - url of selected image.
-@return_react(optional) - boolean - defines if we should return reactjs object(html) or just show the media select popup
-@event(optional) - event - event passed if we need to show the media modal popup (events like: click, change, etc), so for example it's used if this method is called on click and we need to get the media modal popup.
+<br>@label_text - "text:" - text that will be displayed above the input
+<br>@callback(optional) - function - function that will be executed after image selected, used in Gallery object mostly. Argument to callback is @url - url of selected image.
+<br>@return_react(optional) - boolean - defines if we should return reactjs object(html) or just show the media select popup
+<br>@event(optional) - event - event passed if we need to show the media modal popup (events like: click, change, etc), so for example it's used if this method is called on click and we need to get the media modal popup.
 Example with event & callback:
 
     /* add_image is called on click */
@@ -217,7 +217,7 @@ Example:
 
  
 @name - "text" - name of variable to store the input value
-@label_text(optional, may be ' ') - "text:" - text that will be displayed above the input
+<br>@label_text(optional, may be ' ') - "text:" - text that will be displayed above the input
 
 Alpha is supported :)
 
@@ -246,7 +246,7 @@ Example:
 
  
 @name - "text" - name of variable to store the input value
-@label_text(optional, may be ' ') - "text:" - text that will be displayed above the input
+<br>@label_text(optional, may be ' ') - "text:" - text that will be displayed above the input
 
 Alpha is supported :)
 
@@ -300,7 +300,7 @@ Example:
     
 
 @object_sample - object - a sample of object that should be used within gallery 
-@_variable_name - "text" - name of variable to store the images array
+<br>@_variable_name - "text" - name of variable to store the images array
 
 Object example:
 
