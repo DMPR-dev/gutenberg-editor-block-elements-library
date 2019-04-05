@@ -4,6 +4,7 @@ Simple library of classes for simpler block creation
 # Capabilities
  - Input: TEXT 
  - Input: SELECT
+ - Input: DATETIME
  - Input: IMAGE
  - Input: COLOR
  - Custom Image Library (gallery)
@@ -113,6 +114,37 @@ Example:
 Returns REACTJS object with all needed stuff for select input. So, user only needs to select a value. 
 ![
 ](https://i.imgur.com/aTworCZ.png)
+# Usage: DATETIME INPUT
+Signature:
+
+    date_time(name,label_text)
+
+Example:
+   
+
+    attributes: {
+                date_time:{type:"string"},
+                dummy:{type:"string"}
+    },
+    ...
+    edit: function(props) 
+        {
+            var _common = new Common(props);
+		    return _common.input.date_time("date_time","Select date & time:")
+	    }
+
+ How is datetime stored? As string:
+
+     2019-04-12T11:56:59
+
+@name - "text" - name of variable to store the input value
+@label_text(optional, may be ' ') - "text:" - text that will be displayed above the input
+
+Returns REACTJS object with all needed stuff for date time input. So, user only needs to select the needed date and time. 
+
+   ![
+](https://i.imgur.com/i54TUQo.png)
+
 # Usage: IMAGE INPUT
 Signature:
  
