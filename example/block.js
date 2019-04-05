@@ -3,15 +3,9 @@
     // simplify wordpress functions
     var el = element.createElement,
     registerBlockType = blocks.registerBlockType,
-    textBox = editor.RichText
     insperctorControls = editor.InspectorControls,
     panelBody = components.PanelBody,
-    panelRow = components.PanelRow,
-    fragment = element.Fragment,
-    BlockControls = editor.BlockControls;
-
-    //used for storing parent container of "select image" button
-    var current_object_container;
+    fragment = element.Fragment;
 
     var object_sample = {
         id:
@@ -47,13 +41,13 @@
                 imagesssss:{type:"array"},
                 linkssssss:{type:"array"},
                 bg_color:{type:"string"},
-                side:{type:"string"}
+                side:{type:"string"},
+                date_time:{type:"string"}
             },
         // edit callback - displayed on the editor
         edit: function(props) 
         {
             var _common = new Common(props);
-
             return el(fragment,{},
                 [
                     el(insperctorControls,{},
@@ -75,8 +69,12 @@
                             _common.link.init("linkssssss")
                         ])
                     ]),
+                    // get simple text input
                     _common.input.text("text","Text:"),
-                    _common.input.select("side","Select a side:",["left","right"])
+                    // get simple select input
+                    _common.input.select("side","Select a side:",["left","right"]),
+                    // get simple datetime input
+                    _common.input.date_time("date_time","Select date & time:")
                 ])
         },
         // save callback - displayed on the front-end part
