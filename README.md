@@ -1,5 +1,14 @@
 ﻿# Gutenberg Block Elements Library
 Simple library of classes for simpler block creation
+
+# Capabilities
+ - Input: TEXT 
+ - Input: SELECT
+ - Input: IMAGE
+ - Input: COLOR
+ - Custom Image Library (gallery)
+ - Custom Links Library
+
 # Dependencies
 
  - jQuery
@@ -18,13 +27,6 @@ inside the method where you register block on the server side. And then just lin
     	     get_template_directory_uri() . '/extensions/gutenberg/block.js',
             array('_gutenberg-common-lib')
         );
-# Capabilities
- - Input: TEXT 
- - Input: SELECT
- - Input: IMAGE
- - Input: COLOR
- - Custom Image Library (gallery)
- - Custom Links Library
 
 # Important
 
