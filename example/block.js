@@ -46,7 +46,8 @@
                 background:{type:"string"},
                 imagesssss:{type:"array"},
                 linkssssss:{type:"array"},
-                bg_color:{type:"string"}
+                bg_color:{type:"string"},
+                side:{type:"string"}
             },
         // edit callback - displayed on the editor
         edit: function(props) 
@@ -75,6 +76,7 @@
                         ])
                     ]),
                     _common.input.text("text","Text:"),
+                    _common.input.select("side","Select a side:",["left","right"])
                 ])
         },
         // save callback - displayed on the front-end part

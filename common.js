@@ -80,9 +80,61 @@ class Input
                             })
             ]);
     }
+      /*
+     *
+     * Generates all needed stuff for simple select input
+     *
+     * @name - STRING - name of attribute that will be associated with input value
+     *
+     * @label_text - STRING - text that will be displayed on the label under input
+     *
+     * @values - ARRAY OF STRINGS - values that will be displayed under 'select' element
+     *
+     * @return reactjs object
+     *
+     */
+    select(name,label_text,values)
+    {
+        if(label_text == undefined) {label_text="";}
+        console.log(values);
+        var me = this;
+        var update_attr = function(_value)
+        {
+            me.props.attributes[name] = _value;
+            Common.set_dummy(me.props);
+        }
+        var display_values = function()
+        {
+            var options = [];
+            if(values != undefined)
+            {
+                if(values.length > 0)
+                {
+                    for(var i =0; i<values.length; i++)
+                    {
+                        var option = me.el('option',{value:values[i]},values[i]);
+                        options.push(option);
+                    }
+                }
+            }
+            return options;
+        }
+        return this.el('div',{},
+            [
+                this.el('label', {},label_text),
 
+                this.el('select',{ 
+                                className:"common-select-input",
+                                placeholder:label_text.replace(":",""),
+                                style:{border:"1px solid silver",borderRadius:"5px",padding:"2%"},
+                                name:name,onChange:update_attr,value:this.props.attributes[name]
+                            },
+                            [
+                               display_values()
+                            ])
+            ]);
+    }
     /* IMAGE & COLOR RELATED STUFF */
-
     /*
      *
      * Generates wp media modal window
