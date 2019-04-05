@@ -153,6 +153,7 @@ Example with event & callback:
     }
 
 Returns VOID | REACTJS  object with all needed stuff for image input. So, user only needs to select any image | opens modal window
+<br>
 ![
 ](https://i.imgur.com/imruomt.png)
 # Usage: COLOR INPUT
