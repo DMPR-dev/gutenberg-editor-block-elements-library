@@ -237,8 +237,10 @@ For each custom property user will receive prompt window asking to fill the valu
 Returns REACTJS object with all needed stuff for gallery input. So, user only needs to select images 1 by 1 and fill needed fields like heading, sub-line, / whatever specified in the code. 
 
 User will have an ability to move image up/down inside of array, edit all custom properties(actually, any properties different from "url" and "id"), to delete image.
+<br>
 ![
 ](https://i.imgur.com/1juTtyE.png)
+<br>
 ![
 ](https://i.imgur.com/P3fBaLj.png)
 # Usage: LINKS
@@ -267,6 +269,6 @@ Example:
 
 Returns REACTJS object with all needed stuff for links input. So, user only needs to enter link ***url*** and ***name***.
 Links are filled using prompt popup asking for URL and NAME 1 by 1.
-User has an ability to edit the url & name of link and may delete link as well.
+User has an ability to edit the url & name of link and may delete link as well.<br>
 ![
 ](https://i.imgur.com/agenRbe.png)
