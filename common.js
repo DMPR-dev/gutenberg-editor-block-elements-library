@@ -35,18 +35,36 @@ class Input
 {
     constructor(_props)
     {
-        if(wp != undefined)
+        if(wp == undefined)
         {
-            this.props = _props;
-            this.text_box = wp.editor.RichText;
-            this.el = wp.element.createElement;
-            this.ColorPicker = wp.components.ColorPicker;
-        }
-        else
-        {
-            console.log("Unalbe to initialize input object because wp is undefined!");
+            console.error("Unalbe to initialize input object because wp is undefined!");
             return undefined;
         }
+        if(_props == undefined)
+        {
+            console.error("Unalbe to initialize input object because block properties are undefined!");
+            return undefined;
+        } 
+        if(wp.editor == undefined)
+        {
+            console.error("Unalbe to initialize input object because wp.editor is undefined!");
+            return undefined;
+        }
+        if(wp.element == undefined)
+        {
+            console.error("Unalbe to initialize input object because wp.element is undefined!");
+            return undefined;
+        }
+        if(wp.components == undefined)
+        {
+            console.error("Unalbe to initialize input object because wp.components is undefined!");
+            return undefined;
+        }
+        this.props = _props;
+        this.text_box = wp.editor.RichText;
+        this.el = wp.element.createElement;
+        this.ColorPicker = wp.components.ColorPicker;
+        this.DateTimePicker = wp.components.DateTimePicker;
     }
     /*
      *
@@ -62,7 +80,11 @@ class Input
     text(name,label_text)
     {
         if(label_text == undefined) {label_text="";}
-
+        if(name == undefined || name == null)
+        {
+            console.error("Unable to init text input because variable @name is undefined!");
+            return null;
+        }
         var me = this;
         var update_attr = function(_value)
         {
@@ -96,7 +118,11 @@ class Input
     select(name,label_text,values)
     {
         if(label_text == undefined) {label_text="";}
-        console.log(values);
+        if(name == undefined || name == null)
+        {
+            console.error("Unable to init select input because variable @name is undefined!");
+            return null;
+        }
         var me = this;
         var update_attr = function(_value)
         {
@@ -132,6 +158,42 @@ class Input
                             [
                                display_values()
                             ])
+            ]);
+    }
+    /*
+     *
+     * Generates all needed stuff for simple datetime input
+     *
+     * @name - STRING - name of attribute that will be associated with input value
+     *
+     * @label_text - STRING - text that will be displayed on the label under input
+     *
+     * @return reactjs object
+     *
+     */
+    date_time(name,label_text)
+    {
+        if(label_text == undefined) {label_text="";}
+        if(name == undefined || name == null)
+        {
+            console.error("Unable to init date_time input because variable @name is undefined!");
+            return null;
+        }
+        var me = this;
+        var update_attr = function(_value)
+        {
+            me.props.attributes[name] = _value;
+            Common.set_dummy(me.props);
+        }
+        return this.el('div',{},
+            [
+                this.el('label', {},label_text),
+
+                this.el(this.DateTimePicker,{ 
+                                placeholder:label_text.replace(":",""),
+                                onChange:update_attr,
+                                currentDate:this.props.attributes[name]
+                            })
             ]);
     }
     /* IMAGE & COLOR RELATED STUFF */
@@ -179,7 +241,11 @@ class Input
     {
         if(return_react == undefined) {return_react=true;}
         if(label_text == undefined) {label_text="";}
-
+        if(name == undefined || name == null)
+        {
+            console.error("Unable to init image input because variable @name is undefined!");
+            return null;
+        }
         var me = this;
         var handle_image_change = function (event) 
         {
@@ -278,7 +344,11 @@ class Input
     color(name,label_text)
     {
         if(label_text == undefined){label_text="";}
-
+        if(name == undefined || name == null)
+        {
+            console.error("Unable to init color input because variable @name is undefined!");
+            return null;
+        }
         var me = this;
         var color_change_handler = function(color)
         {
@@ -335,7 +405,7 @@ class Gallery
     init(object_sample,_variable_name)
     {
         if(object_sample == undefined){object_sample={};}
-        if(_variable_name == undefined){console.log("No variable name has been set for gallery. Gallery will work, but it will be unable to save any changes.");}
+        if(_variable_name == undefined){console.error("No variable name has been set for gallery. Gallery will work, but it will be unable to save any changes.");}
         this.image_object_sample = object_sample;
         this.variable_name = _variable_name;
 
@@ -490,7 +560,7 @@ class Gallery
             }
             else
             {
-                console.log("Unalbe to add image to gallery because image object sample is not set!");
+                console.error("Unalbe to add image to gallery because image object sample is not set!");
             }
         }
         com.input.image("","",callback,false,event);
@@ -729,7 +799,7 @@ class Link
         }
         else
         {
-            console.log("Unalbe to initialize link object because wp is undefined!");
+            console.error("Unalbe to initialize link object because wp is undefined!");
             return undefined;
         }
     }
@@ -743,7 +813,7 @@ class Link
      */
     init(_variable_name)
     {
-        if(_variable_name == undefined){console.log("No variable name has been set for links. Links system will work, but it will be unable to save any changes.");}
+        if(_variable_name == undefined){console.error("No variable name has been set for links. Links system will work, but it will be unable to save any changes.");}
         this.variable_name = _variable_name;
         return [this.display_links(),this.spawn_link_button()]
     }
