@@ -1,33 +1,30 @@
 <?php
 function gutenberg_test_block() 
 {
-    wp_register_script(
-        'gutenberg-block-common-script',
-        get_template_directory_uri() . '/js/common.js'
-    );
-        wp_register_style(
-        'gutenberg-block-common-style',
-        get_template_directory_uri() . '/js/common.css'
-    );
+    // include the dependencies
+    // make sure to set correct path to the file
+    require_once(get_template_directory() . '/extensions/gutenberg/common-setup.php');
     // register javscript for our block
-    // and enqueue such scripts like:
-    // wp-blocks, wp-element and wp-editor
+    // and enqueue common library:
     wp_register_script(
         'gutenberg-block-test-script',
-        get_template_directory_uri() . '/js/block.js',
-        array( 'wp-blocks', 'wp-element', 'wp-editor','gutenberg-block-common-script')
+        get_template_directory_uri() . '/extensions/gutenberg/block.js',
+        array('_gutenberg-common-lib')
     );
     // enqueue media scripts
-    wp_enqueue_media();
+    global $post;
+    if(!is_null($post) && is_object($post) && $post->ID != null)
+    {
+        wp_enqueue_media(array('post' => $post->ID));
+    }
     // register our block - php side
     // pass array of arguments:
     // editor_script - name of script that we have registered
     // style - style for frontend part
     // editor_style - style for backend part
-    // render_callback - php part that renders front-end
     register_block_type( 'gutenberg-editor-widgets/test', array(
         'editor_script' => 'gutenberg-block-test-script',
-        'editor_style' => 'gutenberg-block-common-style'
+        'editor_style' => '_gutenberg-common-style'
     ) );
 }
 // attach to 'init' hook
