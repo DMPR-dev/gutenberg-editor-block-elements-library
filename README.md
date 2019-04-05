@@ -22,7 +22,9 @@ Simple library of classes for simpler block creation
 # Installation
 Edit file ***common-setup.php*** and make sure to set correct path to the script and style files OR just create directory '*extensions*' in the root of your theme and put '*gutenberg*' folder inside of it.
 After that just use `require_once(PATH_TO_COMMON-SETUP.PHP);`
-Example:
+
+inside the method where you register block on the server side. And then just link it to your block script:
+
 
     require_once(get_template_directory() . '/extensions/gutenberg/common-setup.php');
     // register javscript for test block
@@ -32,15 +34,6 @@ Example:
         get_template_directory_uri() . '/extensions/gutenberg/block.js',
         array('_gutenberg-common-lib')
     );
-
-inside the method where you register block on the server side. And then just link it to your block script:
-
-
-    wp_register_script(
-            'gutenberg-block-test-script',
-             get_template_directory_uri() . '/extensions/gutenberg/block.js',
-            array('_gutenberg-common-lib')
-        );
 
 # Important
 
