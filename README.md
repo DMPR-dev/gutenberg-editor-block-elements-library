@@ -169,7 +169,9 @@ Example:
 @name - "text" - name of variable to store the input value
 @label_text - "text:" - text that will be displayed above the input
 @callback(optional) - function - function that will be executed after image selected, used in Gallery object mostly. Argument to callback is @url - url of selected image.
+
 @return_react(optional) - boolean - defines if we should return reactjs object(html) or just show the media select popup
+
 @event(optional) - event - event passed if we need to show the media modal popup (events like: click, change, etc), so for example it's used if this method is called on click and we need to get the media modal popup.
 Example with event & callback:
 
