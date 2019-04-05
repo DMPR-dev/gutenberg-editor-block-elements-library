@@ -18,7 +18,7 @@ Simple library of classes for simpler block creation
  - wp.editor
  - wp.components
 # Installation
-Edit file ***common-setup.php*** and make sure to set correct path to the script and style files.
+Edit file ***common-setup.php*** and make sure to set correct path to the script and style files OR just create directory '*extensions*' in the root of your theme and put '*gutenberg*' folder inside of it.
 After that just use `require_once(PATH_TO_COMMON-SETUP.PHP);`
 inside the method where you register block on the server side. And then just link it to your block script:
 
@@ -50,7 +50,6 @@ Example:
                 bg_color:{type:"string"},
                 side:{type:"string"}
     },
-
 # Usage: General
 1. Perform the installation ^
 2. Define a new variable that will contain an object of library and pass properties object as argument under 'edit' callback: 
@@ -63,7 +62,7 @@ Example:
 # Usage: TEXT INPUT
 Signature:
 
-    text(name,label_text)
+    init(name,label_text)
 
 Example:
    
@@ -76,7 +75,7 @@ Example:
     edit: function(props) 
         {
             var _common = new Common(props);
-		    return _common.input.text("text","Text:")
+		    return _common.input.text.init("text","Text:")
 	    }
 
  
@@ -90,7 +89,7 @@ Returns REACTJS object with all needed stuff for text input. So, user only needs
 Signature:
  
 
-    select(name,label_text,values)
+    init(name,label_text,values)
 
 Example:
    
@@ -103,7 +102,7 @@ Example:
     edit: function(props) 
         {
             var _common = new Common(props);
-		    return _common.input.select("side","Select side:",["left","right"])
+		    return _common.input.select.init("side","Select side:",["left","right"])
 	    }
 
  
@@ -117,7 +116,7 @@ Returns REACTJS object with all needed stuff for select input. So, user only nee
 # Usage: DATETIME INPUT
 Signature:
 
-    date_time(name,label_text)
+    init(name,label_text)
 
 Example:
    
@@ -130,7 +129,7 @@ Example:
     edit: function(props) 
         {
             var _common = new Common(props);
-		    return _common.input.date_time("date_time","Select date & time:")
+		    return _common.input.datetime.init("date_time","Select date & time:")
 	    }
 
  How is datetime stored? As string:
@@ -149,7 +148,7 @@ Returns REACTJS object with all needed stuff for date time input. So, user only 
 Signature:
  
 
-    image(name,label_text,callback,return_react,event)
+    init(name,label_text,callback,return_react,event)
 
 Example:
    
@@ -162,16 +161,14 @@ Example:
      edit: function(props) 
         {
             var _common = new Common(props);
-		    return _common.input.image("background")
+		    return _common.input.image.init("background")
 	    }
 
  
 @name - "text" - name of variable to store the input value
 @label_text - "text:" - text that will be displayed above the input
 @callback(optional) - function - function that will be executed after image selected, used in Gallery object mostly. Argument to callback is @url - url of selected image.
-
 @return_react(optional) - boolean - defines if we should return reactjs object(html) or just show the media select popup
-
 @event(optional) - event - event passed if we need to show the media modal popup (events like: click, change, etc), so for example it's used if this method is called on click and we need to get the media modal popup.
 Example with event & callback:
 
@@ -185,7 +182,7 @@ Example with event & callback:
         {
 	        ...
         }
-	    com.input.image("","",callback,false,event);
+	    com.input.image.init("","",callback,false,event);
     }
 
 Returns VOID | REACTJS  object with all needed stuff for image input. So, user only needs to select any image | opens modal window
@@ -196,7 +193,7 @@ Returns VOID | REACTJS  object with all needed stuff for image input. So, user o
 Signature:
  
 
-    color(name,label_text)
+    init(name,label_text)
 
 Example:
    
@@ -209,7 +206,7 @@ Example:
     edit: function(props) 
         {
             var _common = new Common(props);
-	        return _common.input.color("bg_color", "Select color:")
+	        return _common.input.color.init("bg_color", "Select color:")
 	    }
 
  
@@ -221,6 +218,56 @@ Alpha is supported :)
 Returns REACTJS object with all needed stuff for color input. So, user only needs to pick a right color. 
 ![
 ](https://i.imgur.com/lM69bRW.png)
+# Usage: CHECKBOX INPUT
+Signature:
+ 
+
+    init(name,label_text)
+
+Example:
+   
+
+    attributes: {
+                dummy:{type:"string"},
+                checkbox_test:{type:"boolean"}
+    },
+    ...
+    edit: function(props) 
+        {
+            var _common = new Common(props);
+	        return _common.input.checkbox.init("checkbox_test","Check me!")
+	    }
+
+ 
+@name - "text" - name of variable to store the input value
+@label_text(optional, may be ' ') - "text:" - text that will be displayed above the input
+
+Alpha is supported :)
+
+Returns REACTJS object with all needed stuff for checkbox input. So, user only needs to check or uncheck it. 
+![
+](https://i.imgur.com/wZIbABz.png)
+# Usage: INPUT: Common to all
+- Here is how we can pass the callback that accepts properties object and input value object as arguments. Executed before original value is saved, so we can modify original value. Should be defined before object init().
+ 
+
+       _common.input.text.callback = (props,object) =>
+       {
+	       /* EXAMPLE */
+	       if(!object.val.includes("px"))
+           {
+               object.val +="px";
+           }
+       },
+       _common.input.select.callback = (props,object) =>
+       {
+	       object.value = "right";
+       },
+       _common.input.image.callback = (props,object) =>
+       {
+	       object.value = "http://example.com/image.jpg";
+       },
+       ...
 # Usage: GALLERY
 Signature:
  
@@ -276,7 +323,7 @@ Returns REACTJS object with all needed stuff for gallery input. So, user only ne
 User will have an ability to move image up/down inside of array, edit all custom properties(actually, any properties different from "url" and "id"), to delete image.
 <br>
 ![
-](https://i.imgur.com/90baJ1e.png)
+](https://camo.githubusercontent.com/f6c04e220ebc99dd8bf1b64dc6e4c015f7ac4d67/68747470733a2f2f692e696d6775722e636f6d2f393062614a31652e706e67)
 # Usage: LINKS
 Signature:
  
@@ -306,3 +353,4 @@ Links are filled using prompt popup asking for URL and NAME 1 by 1.
 User has an ability to edit the url & name of link and may delete link as well.<br>
 ![
 ](https://i.imgur.com/agenRbe.png)
+

@@ -42,7 +42,8 @@
                 linkssssss:{type:"array"},
                 bg_color:{type:"string"},
                 side:{type:"string"},
-                date_time:{type:"string"}
+                date_time:{type:"string"},
+                checkbox_test:{type:"boolean"}
             },
         // edit callback - displayed on the editor
         edit: function(props) 
@@ -54,9 +55,9 @@
                     [
                         el(panelBody,{title:"Background"},
                         [
-                            _common.input.image("background"),
+                            _common.input.image.init("background"),
                             el('hr',{}),
-                            _common.input.color("bg_color", "Select color:")
+                            _common.input.color.init("bg_color", "Select color:")
                         ]),
                         el(panelBody,{title:"Gallery"},
                         [
@@ -69,12 +70,21 @@
                             _common.link.init("linkssssss")
                         ])
                     ]),
+                    _common.input.text.callback = (props,object) =>
+                    {
+                        if(!object.val.includes("px"))
+                        {
+                            object.val +="px";
+                        }
+                    },
                     // get simple text input
-                    _common.input.text("text","Text:"),
+                    _common.input.text.init("text","Text:"),
+                    // get simple checkbox input
+                    _common.input.checkbox.init("checkbox_test","Check me!"),
                     // get simple select input
-                    _common.input.select("side","Select a side:",["left","right"]),
+                    _common.input.select.init("side","Select a side:",["left","right"]),
                     // get simple datetime input
-                    _common.input.date_time("date_time","Select date & time:")
+                    _common.input.datetime.init("date_time","Select date & time:")
                 ])
         },
         // save callback - displayed on the front-end part
