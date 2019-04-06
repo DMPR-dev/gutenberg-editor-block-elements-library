@@ -45,7 +45,7 @@ class CheckBox extends BaseInput
                                 name:this.my_name,
                                 id:this.my_name,
                                 style:{margin:"0px",marginRight:"5px"},
-                                onChange: (value) => {me.update_attr(me,value)},
+                                onChange: (event) => {me.update_attr(me,event)},
                             }),
                 this.el('label', {labelFor:this.my_name},label_text),
             ]);

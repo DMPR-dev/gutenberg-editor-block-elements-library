@@ -3,14 +3,14 @@
 Simple library of classes for simpler block creation
 
 # Capabilities
- - Input: TEXT 
- - Input: SELECT
- - Input: DATETIME
- - Input: IMAGE
- - Input: COLOR
- - Input: CHECKBOX
- - Custom Image Library (gallery)
- - Custom Links Library
+ - <a href="#usage-text-input">Input: TEXT </a>
+ - <a href="#usage-select-input">Input: SELECT </a>
+ - <a href="#usage-datetime-input">Input: DATETIME </a>
+ - <a href="#usage-image-input">Input: IMAGE </a>
+ - <a href="#usage-color-input">Input: COLOR </a>
+ - <a href="#usage-checkbox-input">Input: CHECKBOX </a>
+ - <a href="#usage-links">Custom Image Library (gallery)</a>
+ - <a href="#usage-links">Custom Links Library</a>
 
 # Dependencies
 
@@ -248,11 +248,55 @@ Example:
 @name - "text" - name of variable to store the input value
 <br>@label_text(optional, may be ' ') - "text:" - text that will be displayed above the input
 
-Alpha is supported :)
 
 Returns REACTJS object with all needed stuff for checkbox input. So, user only needs to check or uncheck it. 
 ![
 ](https://i.imgur.com/wZIbABz.png)
+# Usage: RADIOGROUP INPUT
+Signature:
+ 
+
+    init(name,label_text,values)
+
+Example:
+   
+
+    attributes: {
+                dummy:{type:"string"},
+                radio_text:{type:"string"}
+    },
+    ...
+    /* Declare array of objects with values and labels before the 'edit' callback */
+    const buttons = [
+                 {
+                    val:"test1",
+                    label:"TEST 1"
+                 },
+                 {
+                    val:"test2",
+                    label:"TEST 2"
+                 },
+                 {
+                    val:"test3",
+                    label:"TEST 3"
+                 }
+            ];
+    edit: function(props) 
+        {
+            var _common = new Common(props);
+            return  _common.input.radiogroup.init("radio_text","Select 1 of them:",buttons)
+        }
+
+ 
+@name - "text" - name of variable to store the input value
+<br>@label_text(optional, may be ' ') - "text:" - text that will be displayed above the input
+<br>
+@values - array of objects with properties: "val" - value that will be stored when this radio button is checked and "label" - text that will be displayed next to radio button.
+
+Returns REACTJS object with all needed stuff for radiogroup input. So, user only needs to select right button.
+![
+](https://i.imgur.com/xUSJEua.png)
+
 # Usage: INPUT: Common to all
 - Here is how we can pass the callback that accepts properties object and input value object as arguments. Executed before original value is saved, so we can modify original value. Should be defined before object init().
  

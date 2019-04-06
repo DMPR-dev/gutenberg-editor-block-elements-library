@@ -19,7 +19,7 @@ class BaseInput
 	{
 		// to be overriden
 	}
-	// basic 'onChage' event handler
+	// basic 'onChange' event handler
 	// can be overriden
 	update_attr(object,_value)
     {

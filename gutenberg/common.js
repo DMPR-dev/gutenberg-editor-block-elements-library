@@ -27,6 +27,11 @@ class Common
             console.error("Unalbe to initialize input object because wp.components is undefined!");
             return undefined;
         }
+        if(wp.media == undefined)
+        {
+            console.error("Unalbe to initialize input object because wp.media is undefined!");
+            return undefined;
+        }
 
         this.input = new Input(_props);
         this.gallery = new Gallery(_props);

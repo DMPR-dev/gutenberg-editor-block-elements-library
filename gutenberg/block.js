@@ -43,12 +43,28 @@
                 bg_color:{type:"string"},
                 side:{type:"string"},
                 date_time:{type:"string"},
-                checkbox_test:{type:"boolean"}
+                checkbox_test:{type:"boolean"},
+                radio_text:{type:"string"}
             },
         // edit callback - displayed on the editor
         edit: function(props) 
         {
             var _common = new Common(props);
+            const buttons = 
+            [
+                 {
+                    val:"test1",
+                    label:"TEST 1"
+                 },
+                 {
+                    val:"test2",
+                    label:"TEST 2"
+                 },
+                 {
+                    val:"test3",
+                    label:"TEST 3"
+                 }
+            ];
             return el(fragment,{},
                 [
                     el(insperctorControls,{},
@@ -83,6 +99,8 @@
                     _common.input.checkbox.init("checkbox_test","Check me!"),
                     // get simple select input
                     _common.input.select.init("side","Select a side:",["left","right"]),
+                    // get simple radio buttons group for a few buttons
+                    _common.input.radiogroup.init("radio_text","Select 1 of them:",buttons),
                     // get simple datetime input
                     _common.input.datetime.init("date_time","Select date & time:")
                 ])

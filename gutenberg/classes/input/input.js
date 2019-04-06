@@ -10,5 +10,6 @@ class Input
         this.image = new Image(this.props);
         this.color = new Color(this.props);
         this.checkbox = new CheckBox(this.props);
+        this.radiogroup = new RadioGroup(this.props);
     }
 }
