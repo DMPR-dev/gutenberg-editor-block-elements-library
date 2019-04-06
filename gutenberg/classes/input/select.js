@@ -60,7 +60,7 @@ class Select extends BaseInput
                 this.el('select',{ 
                                 className:"common-select-input",
                                 placeholder:label_text.replace(":",""),
-                                style:{border:"1px solid silver",borderRadius:"5px",padding:"2%"},
+                                style:this.style(),
                                 name:name,onChange: (value) => {me.update_attr(me,value)},value:this.props.attributes[this.my_name]
                             },
                             [

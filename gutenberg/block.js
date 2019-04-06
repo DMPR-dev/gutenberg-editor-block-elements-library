@@ -65,27 +65,36 @@
                     label:"TEST 3"
                  }
             ];
+            var custom_textbox = new Text(props);
+            custom_textbox.style = () =>
+            {
+                return {
+                            color:"red",
+                            background:"black"
+                }
+            }
             return el(fragment,{},
                 [
                     el(insperctorControls,{},
                     [
                         el(panelBody,{title:"Background"},
                         [
-                            _common.input.image.init("background"),
+                            new Image(props).init("background"),
                             el('hr',{}),
-                            _common.input.color.init("bg_color", "Select color:")
+                            new Color(props).init("bg_color", "Select color:")
                         ]),
                         el(panelBody,{title:"Gallery"},
                         [
                             // here we just pass the name of variable that will be used to store the images array
-                            _common.gallery.init(object_sample,"imagesssss")
+                            new Gallery(props).init(object_sample,"imagesssss")
                         ]),
                         el(panelBody,{title:"Links"},
                         [
                             // here we just pass the name of variable that will be used to store the links array
-                            _common.link.init("linkssssss")
+                            new Link(props).init("linkssssss")
                         ])
                     ]),
+                    // edit text on change
                     _common.input.text.callback = (props,object) =>
                     {
                         if(!object.val.includes("px"))
@@ -93,6 +102,8 @@
                             object.val +="px";
                         }
                     },
+                    // get customized text input
+                    custom_textbox.init("text","I AM customized"),
                     // get simple text input
                     _common.input.text.init("text","Text:"),
                     // get simple checkbox input

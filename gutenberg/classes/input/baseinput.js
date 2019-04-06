@@ -19,6 +19,15 @@ class BaseInput
 	{
 		// to be overriden
 	}
+	// basic style
+	style()
+	{
+		return {
+			border:"1px solid silver",
+			borderRadius:"5px",
+			padding:"2%"
+		}
+	}
 	// basic 'onChange' event handler
 	// can be overriden
 	update_attr(object,_value)

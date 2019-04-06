@@ -32,7 +32,7 @@ class Text extends BaseInput
 
                 this.el(this.text_box,{ 
                                 placeholder:label_text.replace(":",""),
-                                style:{border:"1px solid silver",borderRadius:"5px",padding:"2%"},
+                                style:this.style(),
                                 name:this.my_name,onChange: (value) => {me.update_attr(me,value)}
                                 ,value:me.props.attributes[name]
                             })

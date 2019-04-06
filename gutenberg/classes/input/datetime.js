@@ -4,6 +4,10 @@ class DateTime extends BaseInput
     {
         super(_props);
     }
+    style()
+    {
+        return {};
+    }
     /*
      *
      * Generates all needed stuff for simple datetime input
@@ -30,6 +34,7 @@ class DateTime extends BaseInput
                 this.el('label', {},label_text),
 
                 this.el(this.DateTimePicker,{ 
+                                style:this.style(),
                                 placeholder:label_text.replace(":",""),
                                 onChange:(value) => {me.update_attr(me,value)},
                                 currentDate:this.props.attributes[name]

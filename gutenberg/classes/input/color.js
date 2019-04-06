@@ -4,6 +4,11 @@ class Color extends BaseInput
 	{
 		super(_props);
 	}
+    // override style
+    style()
+    {
+        return {};
+    }
     // overriden method
     update_attr(object,value)
     {
@@ -60,7 +65,7 @@ class Color extends BaseInput
         }
         return [
             this.el('label',{},label_text),
-            this.el(this.ColorPicker,{color:this.props.attributes[name],onChangeComplete:(value) => {me.update_attr(me,value)}}),
+            this.el(this.ColorPicker,{style:this.style(),color:this.props.attributes[name],onChangeComplete:(value) => {me.update_attr(me,value)}}),
             spawn_del_btn()
         ]
     }

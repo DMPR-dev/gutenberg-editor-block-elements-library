@@ -16,6 +16,14 @@ class RadioGroup extends BaseInput
         object.props.attributes[object.my_name] = value_object.val;
         Common.set_dummy(object.props);
     }
+    // override basic style method
+    style()
+    {
+        return {
+            margin:"0px",
+            marginRight:"5px"
+        }
+    }
     /*
      *
      * Generates all needed stuff for simple text input
@@ -64,7 +72,7 @@ class RadioGroup extends BaseInput
                                 {
                                     type:'radio',
                                     name:me.my_name,
-                                    style:{margin:"0px",marginRight:"5px"},
+                                    style:me.style(),
                                     value:values[i].val,
                                     defaultChecked: (checked == values[i].val),
                                     onChange: (event) => {me.update_attr(me,event)}

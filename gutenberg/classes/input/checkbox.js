@@ -5,6 +5,14 @@ class CheckBox extends BaseInput
         // construct via base class
         super(_props);
     }
+    // override style
+    style()
+    {
+        return {
+            margin:"0px",
+            marginRight:"5px"
+        }
+    }
     // override basic method
     update_attr(object,event)
     {
@@ -44,7 +52,7 @@ class CheckBox extends BaseInput
                                 defaultChecked: me.props.attributes[name],
                                 name:this.my_name,
                                 id:this.my_name,
-                                style:{margin:"0px",marginRight:"5px"},
+                                style:this.style(),
                                 onChange: (event) => {me.update_attr(me,event)},
                             }),
                 this.el('label', {labelFor:this.my_name},label_text),

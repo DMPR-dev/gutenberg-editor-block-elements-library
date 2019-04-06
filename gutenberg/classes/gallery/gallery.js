@@ -1,14 +1,11 @@
 class Gallery
 {
-    constructor(_props,object_sample)
+    constructor(_props)
     {
         if(wp != undefined)
         {
-            if(object_sample == undefined){object_sample={};}
-
             this.props = _props;
             this.el = wp.element.createElement;
-            this.image_object_sample = object_sample;
         }
         else
         {

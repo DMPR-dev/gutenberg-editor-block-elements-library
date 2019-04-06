@@ -4,6 +4,14 @@ class Image extends BaseInput
     {
         super(_props);
     }
+    // override basic style for img
+    style()
+    {
+      return {
+         width:"100%",
+         background:'silver'
+      }
+    }
     /*
      *
      * Generates wp media modal window
@@ -111,11 +119,7 @@ class Image extends BaseInput
                         this.el('label',{},label_text),
                         this.el('div',{style:{width:"100%"}},
                         [
-                             this.el('img',{style:
-                                {
-                                    width:"100%",
-                                    background:'silver'
-                                }, 
+                             this.el('img',{style:this.style(),
                                 src:this.props.attributes[name]
                             })
                         ]),
