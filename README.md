@@ -11,6 +11,18 @@ Simple library of classes for simpler block creation
  - <a href="#usage-checkbox-input">Input: CHECKBOX </a>
  - <a href="#usage-links">Custom Image Library (gallery)</a>
  - <a href="#usage-links">Custom Links Library</a>
+# Classnames
+
+        Text(this.props);
+        Select(this.props);
+        DateTime(this.props);
+        Image(this.props);
+        Color(this.props);
+        CheckBox(this.props);
+        RadioGroup(this.props);
+        
+        Gallery(_props);
+        Link(_props);
 
 # Dependencies
 
@@ -19,6 +31,7 @@ Simple library of classes for simpler block creation
  - wp.element
  - wp.editor
  - wp.components
+ - wp.media
 # Installation
 Edit file ***common-setup.php*** and make sure to set correct path to the script and style files OR just create directory '*extensions*' in the root of your theme and put '*gutenberg*' folder inside of it.
 After that just use `require_once(PATH_TO_COMMON-SETUP.PHP);`
@@ -82,9 +95,16 @@ Example:
         {
             var _common = new Common(props);
             return _common.input.text.init("text","Text:")
+            /* OR */
+            
+            return new Text(props).init("text","Text:");
+            /* OR */
+            
+            var textbox = new Text(props);
+            return textbox.init("text","Text:")
         }
 
- 
+
 @name - "text" - name of variable to store the input value
 <br>@label_text(optional, may be ' ') - "text:" - text that will be displayed above the input
 
@@ -109,6 +129,13 @@ Example:
         {
             var _common = new Common(props);
             return _common.input.select.init("side","Select side:",["left","right"])
+            /* OR */
+            
+            return new Select(props).init("side","Select side:",["left","right"]);
+            /* OR */
+            
+            var select = new Select(props);
+            return select.init("side","Select side:",["left","right"])
         }
 
  
@@ -136,6 +163,13 @@ Example:
         {
             var _common = new Common(props);
             return _common.input.datetime.init("date_time","Select date & time:")
+            /* OR */
+            
+            return new DateTime(props).init("date_time","Select date & time:");
+            /* OR */
+            
+            var datetime = new DateTime(props);
+            return datetime.init("date_time","Select date & time:");
         }
 
  How is datetime stored? As string:
@@ -168,6 +202,13 @@ Example:
         {
             var _common = new Common(props);
             return _common.input.image.init("background")
+             /* OR */
+            
+            return new Image(props).init("background");
+            /* OR */
+            
+            var image = new Image(props);
+            return image.init("background");
         }
 
  
@@ -213,6 +254,13 @@ Example:
         {
             var _common = new Common(props);
             return _common.input.color.init("bg_color", "Select color:")
+            /* OR */
+            
+            return new Color(props).init("bg_color", "Select color:");
+            /* OR */
+            
+            var color = new Color(props);
+            return color.init("bg_color", "Select color:");
         }
 
  
@@ -242,6 +290,13 @@ Example:
         {
             var _common = new Common(props);
             return _common.input.checkbox.init("checkbox_test","Check me!")
+            /* OR */
+            
+            return new CheckBox(props).init("checkbox_test","Check me!");
+            /* OR */
+            
+            var checkbox = new CheckBox(props);
+            return checkbox.init("checkbox_test","Check me!");
         }
 
  
@@ -285,6 +340,13 @@ Example:
         {
             var _common = new Common(props);
             return  _common.input.radiogroup.init("radio_text","Select 1 of them:",buttons)
+            /* OR */
+            
+            return new RadioGroup(props).init("radio_text","Select 1 of them:",buttons)
+            /* OR */
+            
+            var radiogroup = new RadioGroup(props);
+            return radiogroup.init("radio_text","Select 1 of them:",buttons);
         }
 
  
@@ -298,7 +360,7 @@ Returns REACTJS object with all needed stuff for radiogroup input. So, user only
 ](https://i.imgur.com/xUSJEua.png)
 
 # Usage: INPUT: Common to all
-- Here is how we can pass the callback that accepts properties object and input value object as arguments. Executed before original value is saved, so we can modify original value. Should be defined before object init().
+1 [additional onChange callback] - Here is how we can pass the callback that accepts properties object and input value object as arguments. Executed before original value is saved, so we can modify original value. Should be defined before object init().
  
 
        _common.input.text.callback = (props,object) =>
@@ -317,7 +379,33 @@ Returns REACTJS object with all needed stuff for radiogroup input. So, user only
        {
            object.value = "http://example.com/image.jpg";
        },
+       /* OR */
+       var textbox = new Text(props);
+       text.callback = (props,object) =>
+       {
+           // code goes here
+       }
        ...
+2 [custom style] - You can override basic style of each input by overriding its "style" method:  
+
+    // edit default text input style
+    _common.input.text.style = () =>
+    {
+        return {
+             color:"red",
+             background:"black"
+          }
+    },
+    /* OR */
+    var textbox = new Text(props);
+    textbox.style = () =>
+    {
+        return {
+             color:"red",
+             background:"black"
+          }
+    }
+
 # Usage: GALLERY
 Signature:
  
@@ -339,6 +427,13 @@ Example:
         {
             var _common = new Common(props);
             return _common.gallery.init(object_sample,"imagesssss")
+            /* OR */
+            
+            return new Gallery(props).init(object_sample,"imagesssss");
+            
+            /* OR */
+            var gallery = new Gallery(props);
+            gallery.init(object_sample,"imagesssss");
         }
 
     
@@ -392,6 +487,13 @@ Example:
         {
             var _common = new Common(props);
             return _common.link.init("linkssssss")
+            /* OR */
+            
+            return new Link(props).init("linkssssss");
+            
+            /* OR */
+            var links = new Link(props);
+            links.init("linkssssss");
         }
 
  
@@ -403,4 +505,5 @@ Links are filled using prompt popup asking for URL and NAME 1 by 1.
 User has an ability to edit the url & name of link and may delete link as well.<br>
 ![
 ](https://i.imgur.com/agenRbe.png)
+
 
