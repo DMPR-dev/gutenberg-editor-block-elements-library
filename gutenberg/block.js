@@ -44,11 +44,14 @@
                 side:{type:"string"},
                 date_time:{type:"string"},
                 checkbox_test:{type:"boolean"},
-                radio_text:{type:"string"}
+                radio_text:{type:"string"},
+                text_fs:{type:"string"}
             },
         // edit callback - displayed on the editor
         edit: function(props) 
         {
+            window.props = props;
+
             var _common = new Common(props);
             const buttons = 
             [
@@ -65,23 +68,31 @@
                     label:"TEST 3"
                  }
             ];
-            var custom_textbox = new Text(props);
+            var custom_textbox = new TextInput(props);
+            var current_style = custom_textbox.style();
+            // edit style for our custom textbox, apply custom font size
             custom_textbox.style = () =>
             {
-                return {
-                            color:"red",
-                            background:"black"
-                }
+                return Object.assign({
+                        color:"red",
+                        background:"black",
+                        // apply custom font-size
+                        fontSize:props.attributes.text_fs
+                },current_style);
             }
             return el(fragment,{},
                 [
                     el(insperctorControls,{},
                     [
+                        el(panelBody,{title:"Text Size"},
+                        [
+                            new FontSizePickerInput(props).init("text_fs"),
+                        ]),
                         el(panelBody,{title:"Background"},
                         [
-                            new Image(props).init("background"),
+                            new ImageInput(props).init("background"),
                             el('hr',{}),
-                            new Color(props).init("bg_color", "Select color:")
+                            new ColorInput(props).init("bg_color", "Select color:")
                         ]),
                         el(panelBody,{title:"Gallery"},
                         [

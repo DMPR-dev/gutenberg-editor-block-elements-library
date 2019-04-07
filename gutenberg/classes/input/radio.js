@@ -1,4 +1,4 @@
-class RadioGroup extends BaseInput
+class RadioGroupInput extends BaseInput
 {   
     constructor(_props)
     {

@@ -1,4 +1,4 @@
-class DateTime extends BaseInput
+class DateTimeInput extends BaseInput
 {
     constructor(_props)
     {

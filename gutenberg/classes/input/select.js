@@ -1,4 +1,4 @@
-class Select extends BaseInput
+class SelectInput extends BaseInput
 {
     constructor(_props)
     {

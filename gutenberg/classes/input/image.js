@@ -1,4 +1,4 @@
-class Image extends BaseInput
+class ImageInput extends BaseInput
 {
     constructor(_props)
     {

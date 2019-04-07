@@ -1,4 +1,4 @@
-class Color extends BaseInput
+class ColorInput extends BaseInput
 {
 	constructor(_props)
 	{

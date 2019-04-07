@@ -4,12 +4,12 @@ class Input
     {
         this.props = _props;
 
-        this.text = new Text(this.props);
-        this.select = new Select(this.props);
-        this.datetime = new DateTime(this.props);
-        this.image = new Image(this.props);
-        this.color = new Color(this.props);
-        this.checkbox = new CheckBox(this.props);
-        this.radiogroup = new RadioGroup(this.props);
+        this.text = new TextInput(this.props);
+        this.select = new SelectInput(this.props);
+        this.datetime = new DateTimeInput(this.props);
+        this.image = new ImageInput(this.props);
+        this.color = new ColorInput(this.props);
+        this.checkbox = new CheckBoxInput(this.props);
+        this.radiogroup = new RadioGroupInput(this.props);
     }
 }

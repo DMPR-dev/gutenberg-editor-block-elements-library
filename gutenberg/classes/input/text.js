@@ -1,4 +1,4 @@
-class Text extends BaseInput
+class TextInput extends BaseInput
 {   
     constructor(_props)
     {

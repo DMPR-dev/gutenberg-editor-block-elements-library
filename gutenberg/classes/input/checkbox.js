@@ -1,4 +1,4 @@
-class CheckBox extends BaseInput
+class CheckBoxInput extends BaseInput
 {   
     constructor(_props)
     {

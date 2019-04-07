@@ -2,11 +2,47 @@ class BaseInput
 {
 	constructor(_props)
 	{
+        if (this.constructor === BaseInput) 
+        {
+            throw new TypeError('Abstract class "BaseInput" cannot be instantiated directly.'); 
+        }
+		if(wp == undefined)
+        {
+            throw new TypeError("Unalbe to initialize input object because wp is undefined!");
+            return undefined;
+        }
+        if(_props == undefined)
+        {
+            throw new TypeError("Unalbe to initialize input object because block properties are undefined!");
+            return undefined;
+        } 
+        if(wp.editor == undefined)
+        {
+            throw new TypeError("Unalbe to initialize input object because wp.editor is undefined!");
+            return undefined;
+        }
+        if(wp.element == undefined)
+        {
+            throw new TypeError("Unalbe to initialize input object because wp.element is undefined!");
+            return undefined;
+        }
+        if(wp.components == undefined)
+        {
+            throw new TypeErrorr("Unalbe to initialize input object because wp.components is undefined!");
+            return undefined;
+        }
+        if(wp.media == undefined)
+        {
+            throw new TypeError("Unalbe to initialize input object because wp.media is undefined!");
+            return undefined;
+        }
+        
 		this.props = _props;
 		this.el = wp.element.createElement;
         this.text_box = wp.editor.RichText;
         this.DateTimePicker = wp.components.DateTimePicker;
         this.ColorPicker = wp.components.ColorPicker;
+        this.FontSizePicker = wp.components.FontSizePicker;
 	}
 	//basic init
 	init(name)
