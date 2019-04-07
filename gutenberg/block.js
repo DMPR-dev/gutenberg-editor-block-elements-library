@@ -50,8 +50,6 @@
         // edit callback - displayed on the editor
         edit: function(props) 
         {
-            window.props = props;
-
             var _common = new Common(props);
             const buttons = 
             [
