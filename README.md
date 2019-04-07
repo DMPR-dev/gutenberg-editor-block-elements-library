@@ -10,9 +10,7 @@ Simple library of classes for simpler block creation
  - <a href="#usage-color-input">Input: COLOR </a>
  - <a href="#usage-checkbox-input">Input: CHECKBOX </a>
  -  <a href="#usage-radiogroup-input">Input: RADIO BUTTON GROUP </a>
- <br>
  - <a href="#usage-fontsizepicker-tool"> Tool: FONT SIZE PICKER </a>
- <br>
  - <a href="#usage-links">Custom Image Library (gallery)</a>
  - <a href="#usage-links">Custom Links Library</a>
 # Elements Classnames
@@ -86,9 +84,9 @@ Example:
 >           }
 >           /* OR */
 >           /* It's possible to define elements directly */
->           >     edit: function(props) 
+>           edit: function(props) 
 >           {
-    >               var text_box = new TextInput(props);
+>                var text_box = new TextInput(props);
 >           }
 
 # Usage: TEXT INPUT
