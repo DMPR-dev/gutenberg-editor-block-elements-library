@@ -7,6 +7,10 @@ class FontSizePickerInput extends BaseTools
 	// override default callback
 	callback(props,object)
 	{
+		if(object.val == undefined)
+		{
+			object.val = 14;
+		}
 		object.val = object.val.toString();
 		if(!object.val.endsWith("px"))
 		{
@@ -20,6 +24,7 @@ class FontSizePickerInput extends BaseTools
 			}
 		}
 	}
+	// default font sizes
 	sizes()
 	{
 		const sizes = [
@@ -44,6 +49,11 @@ class FontSizePickerInput extends BaseTools
 				size: 14,
 			},
 			{
+				name: '16px' ,
+				slug: '16px',
+				size: 16,
+			},
+			{
 				name: '18px' ,
 				slug: '18px',
 				size: 18,
@@ -58,6 +68,11 @@ class FontSizePickerInput extends BaseTools
 				slug: '36px',
 				size: 36,
 			},
+			{
+				name: '48px' ,
+				slug: '48px',
+				size: 48,
+			}
 		];
 		return sizes;
 	}
