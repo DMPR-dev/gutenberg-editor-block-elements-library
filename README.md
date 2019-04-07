@@ -1,4 +1,4 @@
-﻿
+
 # Gutenberg Block Elements Library
 Simple library of classes for simpler block creation
 
@@ -9,20 +9,21 @@ Simple library of classes for simpler block creation
  - <a href="#usage-image-input">Input: IMAGE </a>
  - <a href="#usage-color-input">Input: COLOR </a>
  - <a href="#usage-checkbox-input">Input: CHECKBOX </a>
+ -  <a href="#usage-radiogroup-input">Input: RADIO BUTTON GROUP </a>
  - <a href="#usage-links">Custom Image Library (gallery)</a>
  - <a href="#usage-links">Custom Links Library</a>
-# Classnames
+# Elements Classnames
 
-        Text(this.props);
-        Select(this.props);
-        DateTime(this.props);
-        Image(this.props);
-        Color(this.props);
-        CheckBox(this.props);
-        RadioGroup(this.props);
+	TextInput(this.props);
+    SelectInput(this.props);
+    DateTimeInput(this.props);
+    ImageInput(this.props);
+    ColorInput(this.props);
+    CheckBoxInput(this.props);
+    RadioGroupInput(this.props);
         
-        Gallery(_props);
-        Link(_props);
+    Gallery(_props);
+    Link(_props);
 
 # Dependencies
 
@@ -97,10 +98,10 @@ Example:
             return _common.input.text.init("text","Text:")
             /* OR */
             
-            return new Text(props).init("text","Text:");
+            return new TextInput(props).init("text","Text:");
             /* OR */
             
-            var textbox = new Text(props);
+            var textbox = new TextInput(props);
             return textbox.init("text","Text:")
         }
 
@@ -131,10 +132,10 @@ Example:
             return _common.input.select.init("side","Select side:",["left","right"])
             /* OR */
             
-            return new Select(props).init("side","Select side:",["left","right"]);
+            return new SelectInput(props).init("side","Select side:",["left","right"]);
             /* OR */
             
-            var select = new Select(props);
+            var select = new SelectInput(props);
             return select.init("side","Select side:",["left","right"])
         }
 
@@ -165,10 +166,10 @@ Example:
             return _common.input.datetime.init("date_time","Select date & time:")
             /* OR */
             
-            return new DateTime(props).init("date_time","Select date & time:");
+            return new DateTimeInput(props).init("date_time","Select date & time:");
             /* OR */
             
-            var datetime = new DateTime(props);
+            var datetime = new DateTimeInput(props);
             return datetime.init("date_time","Select date & time:");
         }
 
@@ -204,10 +205,10 @@ Example:
             return _common.input.image.init("background")
              /* OR */
             
-            return new Image(props).init("background");
+            return new ImageInput(props).init("background");
             /* OR */
             
-            var image = new Image(props);
+            var image = new ImageInput(props);
             return image.init("background");
         }
 
@@ -256,10 +257,10 @@ Example:
             return _common.input.color.init("bg_color", "Select color:")
             /* OR */
             
-            return new Color(props).init("bg_color", "Select color:");
+            return new ColorInput(props).init("bg_color", "Select color:");
             /* OR */
             
-            var color = new Color(props);
+            var color = new ColorInput(props);
             return color.init("bg_color", "Select color:");
         }
 
@@ -292,10 +293,10 @@ Example:
             return _common.input.checkbox.init("checkbox_test","Check me!")
             /* OR */
             
-            return new CheckBox(props).init("checkbox_test","Check me!");
+            return new CheckBoxInput(props).init("checkbox_test","Check me!");
             /* OR */
             
-            var checkbox = new CheckBox(props);
+            var checkbox = new CheckBoxInput(props);
             return checkbox.init("checkbox_test","Check me!");
         }
 
@@ -342,14 +343,14 @@ Example:
             return  _common.input.radiogroup.init("radio_text","Select 1 of them:",buttons)
             /* OR */
             
-            return new RadioGroup(props).init("radio_text","Select 1 of them:",buttons)
+            return new RadioGroupInput(props).init("radio_text","Select 1 of them:",buttons)
             /* OR */
             
-            var radiogroup = new RadioGroup(props);
+            var radiogroup = new RadioGroupInput(props);
             return radiogroup.init("radio_text","Select 1 of them:",buttons);
         }
 
- 
+ Saved as string - property 'val' of button object.
 @name - "text" - name of variable to store the input value
 <br>@label_text(optional, may be ' ') - "text:" - text that will be displayed above the input
 <br>
@@ -383,10 +384,10 @@ Returns REACTJS object with all needed stuff for radiogroup input. So, user only
        var textbox = new Text(props);
        text.callback = (props,object) =>
        {
-           // code goes here
+	       // code goes here
        }
        ...
-2 [custom style] - You can override basic style of each input by overriding its "style" method:  
+2 [custom style] - You can override basic style of each input by overriding its "style" method:	 
 
     // edit default text input style
     _common.input.text.style = () =>
@@ -397,13 +398,23 @@ Returns REACTJS object with all needed stuff for radiogroup input. So, user only
           }
     },
     /* OR */
-    var textbox = new Text(props);
+    var textbox = new TextInput(props);
     textbox.style = () =>
     {
-        return {
+	    return {
              color:"red",
              background:"black"
           }
+    }
+Here is how we can set new style of element and keep basic style:
+
+	 var current_style = custom_textbox.style();
+     custom_textbox.style = () =>
+     {
+          return Object.assign({
+                  color:"red",
+                  çbackground:"black"
+          },current_style);
     }
 
 # Usage: GALLERY
