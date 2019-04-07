@@ -10,21 +10,26 @@ Simple library of classes for simpler block creation
  - <a href="#usage-color-input">Input: COLOR </a>
  - <a href="#usage-checkbox-input">Input: CHECKBOX </a>
  -  <a href="#usage-radiogroup-input">Input: RADIO BUTTON GROUP </a>
+ <br>
  - <a href="#usage-fontsizepicker-tool"> Tool: FONT SIZE PICKER </a>
+ <br>
  - <a href="#usage-links">Custom Image Library (gallery)</a>
  - <a href="#usage-links">Custom Links Library</a>
 # Elements Classnames
 
-    TextInput(this.props);
-    SelectInput(this.props);
-    DateTimeInput(this.props);
-    ImageInput(this.props);
-    ColorInput(this.props);
-    CheckBoxInput(this.props);
-    RadioGroupInput(this.props);
-        
-    Gallery(_props);
-    Link(_props);
+    /* INPUT */
+        TextInput(this.props);
+        SelectInput(this.props);
+        DateTimeInput(this.props);
+        ImageInput(this.props);
+        ColorInput(this.props);
+        CheckBoxInput(this.props);
+        RadioGroupInput(this.props);
+    /* TOOLS */
+        FontSizePickerInput(this.props);
+    /* MISC */     
+        Gallery(_props);
+        Link(_props);
 
 # Dependencies
 
@@ -78,6 +83,12 @@ Example:
 >     edit: function(props) 
 >           {
 >               var _common = new Common(props);
+>           }
+>           /* OR */
+>           /* It's possible to define elements directly */
+>           >     edit: function(props) 
+>           {
+    >               var text_box = new TextInput(props);
 >           }
 
 # Usage: TEXT INPUT
@@ -390,8 +401,6 @@ Example:
  Saved as string - with 'px' at the end.
 @name - "text" - name of variable to store the input value
 <br>@label_text(optional, may be ' ') - "text:" - text that will be displayed above the input
-<br>
-@values - array of objects with properties: "val" - value that will be stored when this radio button is checked and "label" - text that will be displayed next to radio button.
 
 Default font-sizes can be overriden:
 
