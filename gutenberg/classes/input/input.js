@@ -12,6 +12,7 @@ class Input
         this.checkbox = new CheckBoxInput(this.props);
         this.radiogroup = new RadioGroupInput(this.props);
 
-        this.fontsizepicker = new FontSizePickerInput(this.props);
+        this.fontsizepicker = new FontSizePickerTool(this.props);
+        this.aligntool = new AlignmentTool(this.props);
     }
 }

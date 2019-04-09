@@ -45,7 +45,8 @@
                 date_time:{type:"string"},
                 checkbox_test:{type:"boolean"},
                 radio_text:{type:"string"},
-                text_fs:{type:"string"}
+                text_fs:{type:"string"},
+                text_align:{type:"string"}
             },
         // edit callback - displayed on the editor
         edit: function(props) 
@@ -75,7 +76,8 @@
                         color:"red",
                         background:"black",
                         // apply custom font-size
-                        fontSize:props.attributes.text_fs
+                        fontSize:props.attributes.text_fs,
+                        textAlign:props.attributes.text_align
                 },current_style);
             }
             return el(fragment,{},
@@ -84,7 +86,7 @@
                     [
                         el(panelBody,{title:"Text Size"},
                         [
-                            new FontSizePickerInput(props).init("text_fs"),
+                            new FontSizePickerTool(props).init("text_fs"),
                         ]),
                         el(panelBody,{title:"Background"},
                         [
@@ -111,6 +113,7 @@
                             object.val +="px";
                         }
                     },
+                    new AlignmentTool(props).init("text_align","Select text alignment"),
                     // get customized text input
                     custom_textbox.init("text","I AM customized"),
                     // get simple text input

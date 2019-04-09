@@ -1,4 +1,4 @@
-class FontSizePickerInput extends BaseTools
+class FontSizePickerTool extends BaseTools
 {
 	constructor(_props)
 	{
@@ -7,7 +7,7 @@ class FontSizePickerInput extends BaseTools
 	// override default callback
 	callback(props,object)
 	{
-		if(object.val == undefined)
+		if(object.val == undefined || object.val == '')
 		{
 			object.val = 14;
 		}

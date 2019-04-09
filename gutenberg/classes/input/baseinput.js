@@ -43,6 +43,7 @@ class BaseInput
         this.DateTimePicker = wp.components.DateTimePicker;
         this.ColorPicker = wp.components.ColorPicker;
         this.FontSizePicker = wp.components.FontSizePicker;
+        this.AlignmentToolBar = wp.editor.AlignmentToolbar
 	}
 	//basic init
 	init(name)

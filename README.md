@@ -11,23 +11,24 @@ Simple library of classes for simpler block creation
  - <a href="#usage-checkbox-input">Input: CHECKBOX </a>
  -  <a href="#usage-radiogroup-input">Input: RADIO BUTTON GROUP </a>
  - <a href="#usage-fontsizepicker-tool"> Tool: FONT SIZE PICKER </a>
+ -  <a href="#usage-alignment-tool"> Tool: ALIGNMENT TOOL </a>
  - <a href="#usage-links">Custom Image Library (gallery)</a>
  - <a href="#usage-links">Custom Links Library</a>
 # Elements Classnames
 
-    /* INPUT */
-        TextInput(this.props);
-        SelectInput(this.props);
-        DateTimeInput(this.props);
-        ImageInput(this.props);
-        ColorInput(this.props);
-        CheckBoxInput(this.props);
-        RadioGroupInput(this.props);
-    /* TOOLS */
-        FontSizePickerInput(this.props);
+	/* INPUT */
+		TextInput(this.props);
+	    SelectInput(this.props);
+	    DateTimeInput(this.props);
+	    ImageInput(this.props);
+	    ColorInput(this.props);
+	    CheckBoxInput(this.props);
+	    RadioGroupInput(this.props);
+	/* TOOLS */
+		FontSizePickerInput(this.props);
     /* MISC */     
-        Gallery(_props);
-        Link(_props);
+	    Gallery(_props);
+	    Link(_props);
 
 # Dependencies
 
@@ -389,10 +390,10 @@ Example:
             return  _common.input.fontsizepicker.init("text_fs")
             /* OR */
             
-            return new FontSizePickerInput(props).init("text_fs")
+            return new FontSizePickerTool(props).init("text_fs")
             /* OR */
             
-            var fs_input = new FontSizePickerInput(props);
+            var fs_input = new FontSizePickerTool(props);
             return fs_input.init("text_fs");
         }
 
@@ -404,26 +405,59 @@ Default font-sizes can be overriden:
 
     var fsPicker = new FontSizePickerInput(props);
     fsPicker.sizes = function()
-    {
-        const sizes = [
-            {
-                name: '8px' ,
-                slug: '8px',
-                size: 8,
-            },
-            {
-                name: '10px' ,
-                slug: '10px',
-                size: 10,
-            },
-        ];
-        return sizes;
-    }
+	{
+		const sizes = [
+			{
+				name: '8px' ,
+				slug: '8px',
+				size: 8,
+			},
+			{
+				name: '10px' ,
+				slug: '10px',
+				size: 10,
+			},
+		];
+		return sizes;
+	}
 Default callback could also be overriden.
 
 Returns REACTJS object with all needed stuff for fontsize input. So, user only needs to select right size of font.
 ![
 ](https://i.imgur.com/NhOiL8s.png)
+# Usage: ALIGNMENT TOOL
+Signature:
+ 
+
+    init(name,label_text)
+
+Example:
+   
+
+    attributes: {
+                dummy:{type:"string"},
+                text_align:{type:"string"}
+    },
+    ... 
+    edit: function(props) 
+        {
+            var _common = new Common(props);
+            return  _common.input.aligntool.init("text_align")
+            /* OR */
+            
+            return new AlignmentTool(props).init("text_align")
+            /* OR */
+            
+            var aligntool = new AlignmentTool(props);
+            return aligntool.init("text_align");
+        }
+
+@name - "text" - name of variable to store the input value
+<br>@label_text(optional, may be ' ') - "text:" - text that will be displayed above the input
+
+Returns REACTJS object with all needed stuff for text align input. So, user only needs to select right side of text.
+![
+](https://i.imgur.com/ZV4DyOo.png)
 
 # Usage: INPUT: Common to all
 1 [additional onChange callback] - Here is how we can pass the callback that accepts properties object and input value object as arguments. Executed before original value is saved, so we can modify original value. Should be defined before object init().
@@ -449,10 +483,10 @@ Returns REACTJS object with all needed stuff for fontsize input. So, user only n
        var textbox = new Text(props);
        text.callback = (props,object) =>
        {
-           // code goes here
+	       // code goes here
        }
        ...
-2 [custom style] - You can override basic style of each input by overriding its "style" method:  
+2 [custom style] - You can override basic style of each input by overriding its "style" method:	 
 
     // edit default text input style
     _common.input.text.style = () =>
@@ -466,14 +500,14 @@ Returns REACTJS object with all needed stuff for fontsize input. So, user only n
     var textbox = new TextInput(props);
     textbox.style = () =>
     {
-        return {
+	    return {
              color:"red",
              background:"black"
           }
     }
 Here is how we can set new style of element and keep basic style:
 
-     var current_style = custom_textbox.style();
+	 var current_style = custom_textbox.style();
      custom_textbox.style = () =>
      {
           return Object.assign({
