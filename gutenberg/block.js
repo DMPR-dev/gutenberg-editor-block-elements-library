@@ -46,7 +46,8 @@
                 checkbox_test:{type:"boolean"},
                 radio_text:{type:"string"},
                 text_fs:{type:"string"},
-                text_align:{type:"string"}
+                text_align:{type:"string"},
+                list_var:{type:"array"}
             },
         // edit callback - displayed on the editor
         edit: function(props) 
@@ -80,10 +81,31 @@
                         textAlign:props.attributes.text_align
                 },current_style);
             }
+           var list_object_sample = {
+                id:
+                {
+                    val:"",
+                    caption:"ID"
+                },
+                slug:
+                {
+                    val:"",
+                    caption:"Game Slug"
+                },
+                kek:
+                {
+                    val:"",
+                    caption:"KEK"
+                }
+            }
             return el(fragment,{},
                 [
                     el(insperctorControls,{},
                     [
+                        el(panelBody,{title:"List"},
+                        [
+                            new List(props).init("list_var",list_object_sample),
+                        ]),
                         el(panelBody,{title:"Text Size"},
                         [
                             new FontSizePickerTool(props).init("text_fs"),

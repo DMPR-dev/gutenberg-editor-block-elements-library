@@ -14,21 +14,23 @@ Simple library of classes for simpler block creation
  -  <a href="#usage-alignment-tool"> Tool: ALIGNMENT TOOL </a>
  - <a href="#usage-links">Custom Image Library (gallery)</a>
  - <a href="#usage-links">Custom Links Library</a>
+ - <a href="#usage-list">Custom Generic List</a>
 # Elements Classnames
 
-	/* INPUT */
-		TextInput(this.props);
-	    SelectInput(this.props);
-	    DateTimeInput(this.props);
-	    ImageInput(this.props);
-	    ColorInput(this.props);
-	    CheckBoxInput(this.props);
-	    RadioGroupInput(this.props);
-	/* TOOLS */
-		FontSizePickerInput(this.props);
+    /* INPUT */
+        TextInput(this.props);
+        SelectInput(this.props);
+        DateTimeInput(this.props);
+        ImageInput(this.props);
+        ColorInput(this.props);
+        CheckBoxInput(this.props);
+        RadioGroupInput(this.props);
+    /* TOOLS */
+        FontSizePickerInput(this.props);
     /* MISC */     
-	    Gallery(_props);
-	    Link(_props);
+        Gallery(_props);
+        Link(_props);
+        List(_props);
 
 # Dependencies
 
@@ -405,21 +407,21 @@ Default font-sizes can be overriden:
 
     var fsPicker = new FontSizePickerInput(props);
     fsPicker.sizes = function()
-	{
-		const sizes = [
-			{
-				name: '8px' ,
-				slug: '8px',
-				size: 8,
-			},
-			{
-				name: '10px' ,
-				slug: '10px',
-				size: 10,
-			},
-		];
-		return sizes;
-	}
+    {
+        const sizes = [
+            {
+                name: '8px' ,
+                slug: '8px',
+                size: 8,
+            },
+            {
+                name: '10px' ,
+                slug: '10px',
+                size: 10,
+            },
+        ];
+        return sizes;
+    }
 Default callback could also be overriden.
 
 Returns REACTJS object with all needed stuff for fontsize input. So, user only needs to select right size of font.
@@ -483,10 +485,10 @@ Returns REACTJS object with all needed stuff for text align input. So, user only
        var textbox = new Text(props);
        text.callback = (props,object) =>
        {
-	       // code goes here
+           // code goes here
        }
        ...
-2 [custom style] - You can override basic style of each input by overriding its "style" method:	 
+2 [custom style] - You can override basic style of each input by overriding its "style" method:  
 
     // edit default text input style
     _common.input.text.style = () =>
@@ -500,14 +502,14 @@ Returns REACTJS object with all needed stuff for text align input. So, user only
     var textbox = new TextInput(props);
     textbox.style = () =>
     {
-	    return {
+        return {
              color:"red",
              background:"black"
           }
     }
 Here is how we can set new style of element and keep basic style:
 
-	 var current_style = custom_textbox.style();
+     var current_style = custom_textbox.style();
      custom_textbox.style = () =>
      {
           return Object.assign({
@@ -615,5 +617,68 @@ Links are filled using prompt popup asking for URL and NAME 1 by 1.
 User has an ability to edit the url & name of link and may delete link as well.<br>
 ![
 ](https://i.imgur.com/agenRbe.png)
+# Usage: LIST
+Signature:
+ 
 
+    this.list = new List(_props);
+    init(object_sample,_variable_name)
+
+Example:
+   
+
+   
+
+    attributes: {
+                dummy:{type:"string"},
+                list_var:{type:"array"}
+    },
+    ...
+    edit: function(props) 
+        {
+            var _common = new Common(props);
+            return _common.list.init(object_sample,"list_var")
+            /* OR */
+            
+            return new List(props).init(object_sample,"list_var");
+            
+            /* OR */
+            var list = new List(props);
+            list.init(object_sample,"list_var");
+        }
+
+    
+
+@object_sample - object - a sample of object that should be used within list 
+<br>@_variable_name - "text" - name of variable to store the array
+
+Object example:
+
+         var list_object_sample = {
+                id:
+                {
+                    val:"",
+                    caption:"ID"
+                },
+                slug:
+                {
+                    val:"",
+                    caption:"Game Slug"
+                },
+                kek:
+                {
+                    val:"",
+                    caption:"KEK"
+                }
+            }
+Field: ***id*** ist ***REQUIRED***, the rest are optional, developer can specify any field he needs, but the structure `property:{val:"",caption:""}` has to be saved.
+For each custom property user will receive prompt window asking to fill the value
+![
+](https://i.imgur.com/0w0ImQJ.png)
+Returns REACTJS object with all needed stuff for simple generic list input. 
+
+User will have an ability to edit and delete the items on the list.
+<br>
+![
+](https://i.imgur.com/RFoTkhG.png)
 

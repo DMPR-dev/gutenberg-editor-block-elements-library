@@ -36,6 +36,7 @@ class Common
         this.input = new Input(_props);
         this.gallery = new Gallery(_props);
         this.link = new Link(_props);
+        this.list = new List(_props);
     }
     // sets random dummy, needed for updating of block on editor
     static set_dummy(_props)

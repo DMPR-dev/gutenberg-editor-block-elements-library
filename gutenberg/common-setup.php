@@ -25,6 +25,7 @@ wp_register_script('_common_alignmenttool_class',get_template_directory_uri() . 
 
 wp_register_script('_common_gallery_class',get_template_directory_uri() . '/extensions/gutenberg/classes/gallery/gallery.js');
 wp_register_script('_common_link_class',get_template_directory_uri() . '/extensions/gutenberg/classes/link/link.js');
+wp_register_script('_common_list_class',get_template_directory_uri() . '/extensions/gutenberg/classes/list/list.js');
 
 
 wp_register_script(
@@ -42,13 +43,15 @@ wp_register_script(
         '_common_datetime_class',
         '_common_image_class',
         '_common_color_class',
-        '_common_gallery_class',
-        '_common_link_class',
         '_common_checkbox_class',
         '_common_radio_class',
 
         '_common_fontsizepicker_class',
-        '_common_alignmenttool_class'
+        '_common_alignmenttool_class',
+
+        '_common_gallery_class',
+        '_common_link_class',
+        '_common_list_class'
     )
 );
 wp_register_style(
