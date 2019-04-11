@@ -27,6 +27,7 @@ Simple library of classes for simpler block creation
         RadioGroupInput(this.props);
     /* TOOLS */
         FontSizePickerInput(this.props);
+        AlignmentTool(this.props);
     /* MISC */     
         Gallery(_props);
         Link(_props);
