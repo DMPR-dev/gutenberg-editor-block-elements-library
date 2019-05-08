@@ -26,8 +26,7 @@ Simple library of classes for simpler block creation
         CheckBoxInput(this.props);
         RadioGroupInput(this.props);
     /* TOOLS */
-        FontSizePickerTool(this.props);
-        AlignmentTool(this.props);
+        FontSizePickerInput(this.props);
     /* MISC */     
         Gallery(_props);
         Link(_props);
@@ -638,14 +637,14 @@ Example:
     edit: function(props) 
         {
             var _common = new Common(props);
-            return _common.list.init(object_sample,"list_var")
+            return _common.list.init("list_var",object_sample)
             /* OR */
             
-            return new List(props).init(object_sample,"list_var");
+            return new List(props).init("list_var",object_sample);
             
             /* OR */
             var list = new List(props);
-            list.init(object_sample,"list_var");
+            list.init("list_var",object_sample);
         }
 
     

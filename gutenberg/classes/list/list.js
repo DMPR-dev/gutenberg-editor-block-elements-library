@@ -74,7 +74,7 @@ class List
             {
                 if(values[i] != undefined && values[i].val != undefined && values[i].val.toString().length < 64)
                 {
-                    var elem = this.el('p',{style:{marginTop:"0px",marginBottom:"0px"}},values[i].caption + " : " + values[i].val);
+                    var elem = this.el('p',{className:"long-word-wrap",style:{marginTop:"0px",marginBottom:"0px"}},values[i].caption + " : " + values[i].val);
                     elements.push(elem);
                 }
             }
@@ -172,6 +172,10 @@ class List
                     if(values[i] != undefined && values[i].val != undefined && values[i].val.length < 64)
                     {
                         var _prompt = prompt("Enter " + values[i].caption,values[i].val);
+                        if(_prompt == undefined || _prompt == '')
+                        {
+                            return;
+                        }
                         new_object[keys[i]].val = _prompt;
                     }
                 }

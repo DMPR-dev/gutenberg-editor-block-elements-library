@@ -54,7 +54,7 @@ class Gallery
                     if(values[i] != undefined && values[i].val != undefined && values[i].val.length < 64 &&
                         (!values[i].val.includes("http://" || !values[i].val.includes("https://"))))
                     {
-                        var elem = this.el('h3',{className:"heading-title-preview"},values[i].caption + " : " + values[i].val);
+                        var elem = this.el('h3',{className:"heading-title-preview long-word-wrap"},values[i].caption + " : " + values[i].val);
                         elements.push(elem);
                     }
                 }
