@@ -107,4 +107,37 @@
   -webkit-hyphens: auto;
   hyphens: auto;
 }
-
+/* Popup Styling */
+.common-lib-popup.d-none
+{
+	display: none !important;
+}
+.common-lib-popup
+{
+	display: flex !important;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.4);
+	z-index: 9999999;
+	top:0px;
+	bottom: 0px;
+	right: 0px;
+	left:0px;
+	align-items: center;
+    align-self: center;
+    align-content: center;
+}
+.common-lib-popup-items-container
+{
+	width: 50%;
+	background-color: white;
+	border-radius: 10px;
+	padding:20px;
+	margin: auto;
+}
+.common-lib-popup-btn
+{
+	margin-top: 10px;
+	margin-right: 5px !important;
+}

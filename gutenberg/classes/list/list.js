@@ -14,6 +14,22 @@ class List
             return undefined;
         }
     }
+    /* Render popup window */
+    render_popup()
+    {
+        this.popup = new Popup(this.props);
+        this.popup.restricted_fields = function(field_name)
+        {
+            field_name = String(field_name);
+
+            if(field_name.includes("id"))
+            {
+                return true;
+            }
+            return false;
+        }
+        return this.popup.init(this.object_sample);
+    }
     /*
      *
      * spawns reactjs element with current list plus 'add to list' button
@@ -27,7 +43,7 @@ class List
         if(_variable_name == undefined){console.error("No variable name has been set for list object. List system will work, but it will be unable to save any changes.");}
         this.variable_name = _variable_name;
         this.object_sample = _object_sample;
-        return [this.display_list(),this.spawn_list_button()]
+        return [this.display_list(),this.spawn_list_button(),this.render_popup()]
     }
     /*
      *
@@ -155,51 +171,51 @@ class List
      */
     add_to_list()
     {
+        var me = this;
         var current_list = this.props.attributes[this.variable_name];
         if(current_list == undefined)
         {
             current_list = [];
         }
-        var values = Object.values(this.object_sample);
-        var keys = Object.keys(this.object_sample);
-        var new_object = JSON.parse(JSON.stringify(this.object_sample));
-        if(values != undefined && keys != undefined && keys.length == values.length)
+        me.popup.callback = function()
         {
-            for (var i =0; i<values.length;i++) 
+            var new_object = JSON.parse(JSON.stringify(me.object_sample));
+
+            var values = Object.values(new_object);
+            var keys = Object.keys(new_object);
+
+            if(values != undefined && keys != undefined && keys.length == values.length)
             {
-                if(keys[i].toUpperCase() != 'id'.toUpperCase())
+                /* REPLACE HERE */
+                for(var i = 0; i < keys.length; i++)
                 {
-                    if(values[i] != undefined && values[i].val != undefined && values[i].val.length < 64)
+                    if(!me.popup.restricted_fields(keys[i]))
                     {
-                        var _prompt = prompt("Enter " + values[i].caption,values[i].val);
-                        if(_prompt == undefined || _prompt == '')
-                        {
-                            return;
-                        }
-                        new_object[keys[i]].val = _prompt;
+                        new_object[keys[i]].val = me.popup.options[keys[i]].val;
                     }
                 }
-            }
-            if(current_list.length > 0)
-            {
-                // if there are objects, then pick id of length of array
-                new_object.id.val =  this.props.attributes[this.variable_name].length-1;
-                // and iterate id until there are no object with such id
-                while(this.find_needed_item(new_object.id.val) != undefined)
+                if(current_list.length > 0)
                 {
-                    new_object.id.val++;
+                    // if there are objects, then pick id of length of array
+                    new_object.id.val =  me.props.attributes[me.variable_name].length-1;
+                    // and iterate id until there are no object with such id
+                    while(me.find_needed_item(new_object.id.val) != undefined)
+                    {
+                        new_object.id.val++;
+                    }
                 }
-            }
-            else
-            {
-                // if array is empty, then just pick index 0
-                new_object.id.val = 0;
-            }
+                else
+                {
+                    // if array is empty, then just pick index 0
+                    new_object.id.val = 0;
+                }
 
+            }
+            current_list.push(new_object);
+            me.props.attributes[me.variable_name] = current_list;
+            Common.set_dummy(me.props);
         }
-        current_list.push(new_object);
-        this.props.attributes[this.variable_name] = current_list;
-        Common.set_dummy(this.props);
+        me.popup.open_popup();
     }
     /*
      *
@@ -244,37 +260,35 @@ class List
      */
     edit_list(id)
     {
-        // store array of images in temp variable
-        var images = this.props.attributes[this.variable_name];
+        var me = this;
+        // store array of objects in temp variable
+        var objects = this.props.attributes[this.variable_name];
         // find needed object by id
         var needed_object = this.find_needed_item(id);
        
         if(needed_object != undefined)
         {
             // verify that needed object exists in array
-            var index = images.indexOf(needed_object);
+            var index = objects.indexOf(needed_object);
             if (index > -1) 
             {
                 // edit object properties
-                var values = Object.values(images[index]);
-                var keys = Object.keys(images[index])
-                if(values != undefined && keys != undefined && keys.length == values.length)
+                me.popup.callback = function()
                 {
-                    for (var i = 0; i<values.length;i++) 
+                    var values = Object.values(objects[index]);
+                    var keys = Object.keys(objects[index]);
+
+                    for(var i = 0; i < keys.length; i++)
                     {
-                        if(values[i].caption.toUpperCase() != "id".toUpperCase())
+                        if(!me.popup.restricted_fields(keys[i]))
                         {
-                            var _prompt = prompt("Enter " + values[i].caption + ":",values[i].val);
-                            if(_prompt != null)
-                            {
-                                images[index][keys[i]].val = _prompt;
-                            }
+                            objects[index][keys[i]].val = me.popup.options[keys[i]].val;
                         }
                     }
-                    
-                    this.props.attributes[this.variable_name] = images;
-                    Common.set_dummy(this.props);
+                    me.props.attributes[me.variable_name] = objects;
+                    Common.set_dummy(me.props);
                 }
+                me.popup.open_popup(objects[index]);
             }
         }
     }

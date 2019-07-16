@@ -29,7 +29,26 @@ class Gallery
         this.image_object_sample = object_sample;
         this.variable_name = _variable_name;
 
-        return [this.display_images_backend(),this.add_image_btn()]
+        return [this.display_images_backend(),this.add_image_btn(),this.render_popup()]
+    }
+    render_popup()
+    {
+        this.popup = new Popup(this.props);
+        this.popup.restricted_fields = function(field_name)
+        {
+            field_name = String(field_name);
+
+            if(field_name.includes("id"))
+            {
+                return true;
+            }
+            if(field_name.includes("url"))
+            {
+                return true;
+            }
+            return false;
+        }
+        return this.popup.init(this.image_object_sample);
     }
     /*
      *
@@ -136,45 +155,47 @@ class Gallery
         {
             this.props.attributes[this.variable_name] = [];
         }
+
         var callback = function(url)
         {
             if(me.image_object_sample != undefined)
             {
                 var values = Object.values(me.image_object_sample);
                 var keys = Object.keys(me.image_object_sample);
-                var new_object = JSON.parse(JSON.stringify(me.image_object_sample));
-                new_object.url.val = url;
                 if(values != undefined && keys != undefined && keys.length == values.length)
                 {
-                    for (var i =0; i<values.length;i++) 
+                    me.popup.callback = function()
                     {
-                        if(keys[i].toUpperCase() != 'id'.toUpperCase() && keys[i].toUpperCase() != 'url'.toUpperCase())
+                        var new_object = JSON.parse(JSON.stringify(me.image_object_sample));
+                        new_object.url.val = url;
+
+                        for(var i = 0; i < keys.length; i++)
                         {
-                            if(values[i] != undefined && values[i].val != undefined && values[i].val.length < 64 &&
-                                (!values[i].val.includes("http://" || !values[i].val.includes("https://"))))
+                            if(!me.popup.restricted_fields(keys[i]))
                             {
-                                var _prompt = prompt("Enter " + values[i].caption,values[i].val);
-                                new_object[keys[i]].val = _prompt;
+                                new_object[keys[i]].val = me.popup.options[keys[i]].val;
                             }
                         }
-                    }
-                    if(me.props.attributes[me.variable_name].length > 0)
-                    {
-                        // if there are objects, then pick id of length of array
-                        new_object.id.val =  me.props.attributes[me.variable_name].length-1;
-                        // and iterate id until there are no object with such id
-                        while(me.find_image_by_id(new_object.id.val) != undefined)
+
+                        if(me.props.attributes[me.variable_name].length > 0)
                         {
-                            new_object.id.val++;
+                            // if there are objects, then pick id of length of array
+                            new_object.id.val =  me.props.attributes[me.variable_name].length-1;
+                            // and iterate id until there are no object with such id
+                            while(me.find_image_by_id(new_object.id.val) != undefined)
+                            {
+                                new_object.id.val++;
+                            }
                         }
+                        else
+                        {
+                            // if array is empty, then just pick index 0
+                            new_object.id.val = 0;
+                        }
+                        me.props.attributes[me.variable_name].push(new_object);
+                        Common.set_dummy(me.props);
                     }
-                    else
-                    {
-                        // if array is empty, then just pick index 0
-                        new_object.id.val = 0;
-                    }
-                    me.props.attributes[me.variable_name].push(new_object);
-                    Common.set_dummy(me.props);
+                    me.popup.open_popup();
                 }
 
             }
@@ -347,6 +368,8 @@ class Gallery
         // find needed object by id
         var needed_object = this.find_image_by_id(image_id);
        
+        var me = this;
+
         if(needed_object != undefined)
         {
             // verify that needed object exists in array
@@ -358,21 +381,20 @@ class Gallery
                 var keys = Object.keys(images[index])
                 if(values != undefined && keys != undefined && keys.length == values.length)
                 {
-                    for (var i = 0; i<values.length;i++) 
+                    me.popup.callback = function()
                     {
-                        if(values[i].caption.toUpperCase() != "url".toUpperCase() &&
-                            values[i].caption.toUpperCase() != "id".toUpperCase())
+                        for(var i = 0; i < keys.length; i++)
                         {
-                            var _prompt = prompt("Enter " + values[i].caption + ":",values[i].val);
-                            if(_prompt != null)
+                            if(!me.popup.restricted_fields(keys[i]))
                             {
-                                images[index][keys[i]].val = _prompt;
+                                images[index][keys[i]].val = me.popup.options[keys[i]].val;
                             }
                         }
+                        me.props.attributes[me.variable_name] = images;
+                        Common.set_dummy(me.props);
                     }
-                    
-                    this.props.attributes[this.variable_name] = images;
-                    Common.set_dummy(this.props);
+                    /* Open popup and append current values */
+                    me.popup.open_popup(needed_object);
                 }
             }
         }

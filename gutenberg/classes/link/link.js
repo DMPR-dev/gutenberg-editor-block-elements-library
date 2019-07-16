@@ -14,6 +14,12 @@ class Link
             return undefined;
         }
     }
+    /* Render popup window */
+    render_popup()
+    {
+        this.popup = new Popup(this.props);
+        return this.popup.init(this.link_object);
+    }
     /*
      *
      * spawns reactjs element with current links plus 'add link' button
@@ -26,7 +32,19 @@ class Link
     {
         if(_variable_name == undefined){console.error("No variable name has been set for links. Links system will work, but it will be unable to save any changes.");}
         this.variable_name = _variable_name;
-        return [this.display_links(),this.spawn_link_button()]
+        this.link_object = {
+            url:
+            {
+                val:"",
+                caption:"URL"
+            },
+            name:
+            {
+                val:"",
+                caption:"Name"
+            },
+        };
+        return [this.display_links(),this.spawn_link_button(),this.render_popup()]
     }
     /*
      *
@@ -50,7 +68,7 @@ class Link
             {
                 // find needed object by 'url' property
                 // and return it or its index
-                if(this.props.attributes[this.variable_name][i].url == url)
+                if(this.props.attributes[this.variable_name][i].url.val == url)
                 {
                     if(return_index)
                     {
@@ -87,22 +105,25 @@ class Link
                     // verify that link object under current index is not undefined
                     if(links[i] != undefined)
                     {
-                        // generate reactjs object and push it to the array of elements
-                        var element = this.el('p',{},
-                                        [
-                                            this.el('span',{className:"links-icon-button dashicons dashicons-edit",onClick:function(event)
-                                                {
-                                                    var url = jQuery(event.target).attr("url");
-                                                    me.edit_link(url);
-                                                },url:links[i].url}),
-                                            this.el('span',{className:"dashicons dashicons-trash",onClick:function(event)
-                                                {
-                                                    var url = jQuery(event.target).attr("url");
-                                                    me.delete_link(url);
-                                                },url:links[i].url}),
-                                            links[i].name
-                                        ]);
-                        elements.push(element);
+                        if(links[i].name != undefined && links[i].url.val != undefined)
+                        {
+                            // generate reactjs object and push it to the array of elements
+                            var element = this.el('p',{},
+                                            [
+                                                this.el('span',{className:"links-icon-button dashicons dashicons-edit",onClick:function(event)
+                                                    {
+                                                        var url = jQuery(event.target).attr("url");
+                                                        me.edit_link(url);
+                                                    },url:links[i].url.val}),
+                                                this.el('span',{className:"dashicons dashicons-trash",onClick:function(event)
+                                                    {
+                                                        var url = jQuery(event.target).attr("url");
+                                                        me.delete_link(url);
+                                                    },url:links[i].url.val}),
+                                                links[i].name.val
+                                            ]);
+                            elements.push(element);
+                        }
                     }
                 }
             }
@@ -135,44 +156,32 @@ class Link
      */
     add_link()
     {
+        var me = this;
         var current_links = this.props.attributes[this.variable_name];
         if(current_links == undefined)
         {
             current_links = [];
         }
-        var _prompt = "string";
-        var i = current_links.length;
-        if(i == 0)
+
+        me.popup.callback = function()
         {
-            i = 1;
-        }
-        else
-        {
-            i++;
-        }
-        while(_prompt != '' && _prompt != null && _prompt != undefined && _prompt.length > 0)
-        {
-            var link_object = {
-                url:"",
-                name:""
-            }
-            _prompt = prompt("Enter Link #" + i+" URL:",'');
-            if(_prompt != undefined && _prompt != null && _prompt.length > 0)
+            var new_object = JSON.parse(JSON.stringify(me.link_object));
+
+            var values = Object.values(new_object);
+            var keys = Object.keys(new_object);
+
+            for(var i = 0; i < keys.length; i++)
             {
-                link_object.url = _prompt;
-                _prompt = prompt("Enter Link #" + i+" name:",'');
-                if(_prompt != undefined && _prompt != null && _prompt.length > 0)
+                if(!me.popup.restricted_fields(keys[i]))
                 {
-                    link_object.name = _prompt;
-
-                    current_links.push(link_object);
-
-                    i++;
+                    new_object[keys[i]].val = me.popup.options[keys[i]].val;
                 }
             }
+            current_links.push(new_object);
+            me.props.attributes[me.variable_name] = current_links;
+            Common.set_dummy(me.props);
         }
-        this.props.attributes[this.variable_name] = current_links;
-        Common.set_dummy(this.props);
+        me.popup.open_popup();
     }
     /*
      *
@@ -217,20 +226,31 @@ class Link
      */
     edit_link(url)
     {
+        var me = this;
         if(url != undefined)
         {
-            var link_object_index = this.find_needed_link(url,true);
+            var link_object_index = me.find_needed_link(url,true);
             if(link_object_index != undefined && link_object_index>-1)
             {
                 // store as temp array          
-                var links = this.props.attributes[this.variable_name];
-                var _prompt = prompt("Enter link URL:",links[link_object_index].url);
-                links[link_object_index].url = _prompt;
-                _prompt = prompt("Enter link name:",links[link_object_index].name);
-                links[link_object_index].name = _prompt;
+                var links = me.props.attributes[me.variable_name];
+                
+                me.popup.callback = function()
+                {
+                    var values = Object.values(links[link_object_index]);
+                    var keys = Object.keys(links[link_object_index]);
 
-                this.props.attributes[this.variable_name] = links;
-                Common.set_dummy(this.props);
+                    for(var i = 0; i < keys.length; i++)
+                    {
+                        if(!me.popup.restricted_fields(keys[i]))
+                        {
+                            links[link_object_index][keys[i]].val = me.popup.options[keys[i]].val;
+                        }
+                    }
+                    me.props.attributes[me.variable_name] = links;
+                    Common.set_dummy(me.props);
+                }
+                me.popup.open_popup(links[link_object_index]);
             }
         }
     }
