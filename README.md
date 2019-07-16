@@ -1,6 +1,5 @@
-
 # Gutenberg Block Elements Library
-Simple library of classes for simpler block creation
+Simple library of classes for simpler block creation.
 
 # Capabilities
  - <a href="#usage-text-input">Input: TEXT </a>
@@ -574,7 +573,8 @@ Object example:
                 }
 Fields like: ***id*** and ***url*** are ***REQUIRED***, the rest are optional, developer can specify any field he needs, but the structure `property:{val:"",caption:""}` has to be saved.
 For each custom property user will receive prompt window asking to fill the value when the image is selected:![
-](https://i.imgur.com/0w0ImQJ.png)
+](https://i.imgur.com/m8Olz0J.png) *(picture is taken from Link class)*
+
 Returns REACTJS object with all needed stuff for gallery input. So, user only needs to select images 1 by 1 and fill needed fields like heading, sub-line, / whatever specified in the code. 
 
 User will have an ability to move image up/down inside of array, edit all custom properties(actually, any properties different from "url" and "id"), to delete image.
@@ -674,7 +674,7 @@ Object example:
 Field: ***id*** ist ***REQUIRED***, the rest are optional, developer can specify any field he needs, but the structure `property:{val:"",caption:""}` has to be saved.
 For each custom property user will receive prompt window asking to fill the value
 ![
-](https://i.imgur.com/0w0ImQJ.png)
+](https://i.imgur.com/m8Olz0J.png)
 Returns REACTJS object with all needed stuff for simple generic list input. 
 
 User will have an ability to edit and delete the items on the list.
