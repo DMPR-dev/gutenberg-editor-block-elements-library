@@ -32,10 +32,19 @@ class TextInput extends BaseInput
 
                 this.el(this.text_box,{ 
                                 placeholder:label_text.replace(":",""),
+                                formattingControls: this.formatting_controls(),
                                 style:this.style(),
                                 name:this.my_name,onChange: (value) => {me.update_attr(me,value)}
                                 ,value:me.props.attributes[name]
                             })
             ]);
+    }
+    /*
+        Default formatting controls of text input, can be overriden
+        @link https://github.com/WordPress/gutenberg/tree/master/packages/block-editor/src/components/rich-text#formattingcontrols-array
+    */
+    formatting_controls()
+    {
+        return [ 'bold', 'italic', 'strikethrough' , 'link'];
     }
 }

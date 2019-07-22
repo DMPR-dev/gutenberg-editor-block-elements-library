@@ -1,4 +1,5 @@
 
+
 # Gutenberg Block Elements Library
 Simple library of classes for simpler block creation
 
@@ -125,6 +126,22 @@ Example:
 Returns REACTJS object with all needed stuff for text input. So, user only needs to enter the text. 
 ![
 ](https://i.imgur.com/hMcmOpu.png)
+
+07-22-2019: Added an ability to override the input formatting controls, signature:
+
+    formatting_controls()
+    {
+        return [ 'bold', 'italic', 'strikethrough' , 'link'];
+    }
+Example:
+
+    var input = new TextInput(props);
+    input.formatting_controls = function()
+    {
+      return [ 'bold', 'italic', 'strikethrough'];
+    }
+    return input.init("embed_url",props.attributes.embed_type + " URL:");
+
 # Usage: SELECT INPUT
 Signature:
  
