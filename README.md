@@ -16,7 +16,7 @@ Simple library of classes for simpler block creation
  - <a href="#usage-links">Custom Image Library (gallery)</a>
  - <a href="#usage-links">Custom Links Library</a>
  - <a href="#usage-list">Custom Generic List</a>
- - <a href="#custom-popup">Custom Popup</a>
+ - <a href="#usage-custom-popup">Custom Popup</a>
 # Elements Classnames
 
     /* INPUT */
