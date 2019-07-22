@@ -16,6 +16,7 @@ Simple library of classes for simpler block creation
  - <a href="#usage-links">Custom Image Library (gallery)</a>
  - <a href="#usage-links">Custom Links Library</a>
  - <a href="#usage-list">Custom Generic List</a>
+ - <a href="#custom-popup">Custom Popup</a>
 # Elements Classnames
 
     /* INPUT */
@@ -32,6 +33,7 @@ Simple library of classes for simpler block creation
         Gallery(_props);
         Link(_props);
         List(_props);
+        Popup(this.props)
 
 # Dependencies
 
@@ -596,7 +598,7 @@ Object example:
                 }
 Fields like: ***id*** and ***url*** are ***REQUIRED***, the rest are optional, developer can specify any field he needs, but the structure `property:{val:"",caption:""}` has to be saved.
 For each custom property user will receive prompt window asking to fill the value when the image is selected:![
-](https://i.imgur.com/0w0ImQJ.png)
+](https://i.imgur.com/m8Olz0J.png) *(picture is taken from Link class)*
 Returns REACTJS object with all needed stuff for gallery input. So, user only needs to select images 1 by 1 and fill needed fields like heading, sub-line, / whatever specified in the code. 
 
 User will have an ability to move image up/down inside of array, edit all custom properties(actually, any properties different from "url" and "id"), to delete image.
@@ -696,7 +698,7 @@ Object example:
 Field: ***id*** ist ***REQUIRED***, the rest are optional, developer can specify any field he needs, but the structure `property:{val:"",caption:""}` has to be saved.
 For each custom property user will receive prompt window asking to fill the value
 ![
-](https://i.imgur.com/0w0ImQJ.png)
+](https://i.imgur.com/m8Olz0J.png) *(picture is taken from Link class)*
 Returns REACTJS object with all needed stuff for simple generic list input. 
 
 User will have an ability to edit and delete the items on the list.
@@ -704,3 +706,104 @@ User will have an ability to edit and delete the items on the list.
 ![
 ](https://i.imgur.com/RFoTkhG.png)
 
+# Usage: Custom Popup
+Signature:
+ 
+
+    this.popup = new Popup(props);
+    init(object_sample);
+
+Example:
+   
+
+   
+    ...
+    edit: function(props) 
+        {
+            return new Popup(props).init(object_sample);
+            
+            /* OR */
+            var popup = new Popup(props);
+            popup.init(object_sample);
+        }
+
+    
+
+@object_sample - object - a sample of object that should be used within popup 
+
+Object example:
+
+         var list_object_sample = {
+                url:
+                {
+                    val:"",
+                    caption:"URL"
+                },
+                name:
+                {
+                    val:"",
+                    caption:"Name"
+                }
+            }
+For each custom property user will receive prompt window asking to fill the values
+![
+](https://i.imgur.com/m8Olz0J.png)
+Returns REACTJS object with all needed stuff for simple popup with inputs 
+
+- Open popup method:
+
+>     open_popup(object = undefined)
+>     //a custom object can be passed, for example if we need to edit existing values.
+
+Customization: Restricted Fields
+- Fields that should be skipped and never updated in callback
+Example:
+     
+        this.popup = new Popup(this.props);
+        this.popup.restricted_fields = function(field_nam
+        {
+        field_name = String(field_name);
+        if(field_name.includes("id"))
+        {
+            return true;
+        }
+        if(field_name.includes("url"))
+        {
+            return true;
+        }
+        return false;
+        }
+        /* Other function where we need to open the popup to edit the fields*/
+        me.popup.callback = function(){
+        for(var i = 0; i < keys.length; i++)
+        {
+            if(!me.popup.restricted_fields(keys[i]))
+            {
+                images[index][keys[i]].val = me.popup.options[keys[i]].val;
+            }
+        }
+        /* Open popup and append current values */
+        me.popup.open_popup(needed_object);
+        
+Customization: Callback
+
+- A method that will assign received values to needed variables (no arguments needed), uses object sample.
+Example:
+
+  
+
+ 
+
+       me.popup.callback = function()
+                        {
+                            for(var i = 0; i < keys.length; i++)
+                            {
+                                if(!me.popup.restricted_fields(keys[i]))
+                                {
+                                    images[index][keys[i]].val = me.popup.options[keys[i]].val;
+                                }
+                            }
+
+                        }
+                        /* Open popup and append current values */
+                        me.popup.open_popup(needed_object);
