@@ -762,18 +762,19 @@ Example:
         this.popup = new Popup(this.props);
         this.popup.restricted_fields = function(field_nam
         {
-        field_name = String(field_name);
-        if(field_name.includes("id"))
-        {
-            return true;
+            field_name = String(field_name);
+            if(field_name.includes("id"))
+            {
+                return true;
+            }
+            if(field_name.includes("url"))
+            {
+                return true;
+            }
+            return false;
         }
-        if(field_name.includes("url"))
-        {
-            return true;
-        }
-        return false;
-        }
-        /* Other function where we need to open the popup to edit the fields*/
+        /* THE USAGE SHOWCASE: Other function where we need to open the popup to edit the fields*/
+        var me = this;
         me.popup.callback = function(){
         for(var i = 0; i < keys.length; i++)
         {
@@ -790,20 +791,17 @@ Customization: Callback
 - A method that will assign received values to needed variables (no arguments needed), uses object sample.
 Example:
 
-  
-
- 
-
-       me.popup.callback = function()
-                        {
-                            for(var i = 0; i < keys.length; i++)
-                            {
-                                if(!me.popup.restricted_fields(keys[i]))
-                                {
-                                    images[index][keys[i]].val = me.popup.options[keys[i]].val;
-                                }
-                            }
-
-                        }
-                        /* Open popup and append current values */
-                        me.popup.open_popup(needed_object);
+>
+>     var me = this;
+>     me.popup.callback = function()
+>     {
+>         for(var i = 0; i < keys.length; i++)
+>         {
+>             if(!me.popup.restricted_fields(keys[i]))
+>             {
+>                 images[index][keys[i]].val = me.popup.options[keys[i]].val;
+>             }
+>         }
+>     }
+>     /* Open popup and append current values */
+>     me.popup.open_popup(needed_object);
