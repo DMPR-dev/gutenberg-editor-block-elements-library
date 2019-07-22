@@ -4,6 +4,7 @@ class TextInput extends BaseInput
     {
         // construct via base class
         super(_props);
+        this.plain = false;
     }
     /*
      *
@@ -12,6 +13,8 @@ class TextInput extends BaseInput
      * @name - STRING - name of attribute that will be associated with input value
      *
      * @label_text - STRING - text that will be displayed on the label under input
+     *
+     * @plain_text - BOOLEAN - define if the input should be a plain text input or richtext wp element
      *
      * @return reactjs object
      *
@@ -26,18 +29,41 @@ class TextInput extends BaseInput
             return null;
         }
         var me = this;
-        return this.el('div',{},
+        if(!this.plain)
+        {
+            return this.el('div',{},
+                [
+                    this.el('label', {},label_text),
+
+                    this.el(this.text_box,{
+                                    placeholder:label_text.replace(":",""),
+                                    formattingControls: this.formatting_controls(),
+                                    style:this.style(),
+                                    name:this.my_name,onChange: (value) => {
+                                        me.update_attr(me,value);
+                                    }
+                                    ,value:me.props.attributes[name]
+                                })
+                ]);
+        }
+        else
+        {
+            return this.el('div',{},
             [
                 this.el('label', {},label_text),
 
-                this.el(this.text_box,{ 
+                this.el("input",{
+                                type:"text",
                                 placeholder:label_text.replace(":",""),
-                                formattingControls: this.formatting_controls(),
                                 style:this.style(),
-                                name:this.my_name,onChange: (value) => {me.update_attr(me,value)}
-                                ,value:me.props.attributes[name]
+                                name:this.my_name,onChange: (event) => {
+                                    console.log(event.target.value);
+                                    me.update_attr(me,event.target.value);
+                                },
+                                defaultValue:me.props.attributes[name]
                             })
             ]);
+        }
     }
     /*
         Default formatting controls of text input, can be overriden
@@ -46,5 +72,14 @@ class TextInput extends BaseInput
     formatting_controls()
     {
         return [ 'bold', 'italic', 'strikethrough' , 'link'];
+    }
+    // @link https://javascript.ru/php/strip_tags
+    strip_tags( str )
+    { 
+    // Strip HTML and PHP tags from a string
+    // 
+    // +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+
+    return str.replace(/<\/?[^>]+>/gi, '');
     }
 }

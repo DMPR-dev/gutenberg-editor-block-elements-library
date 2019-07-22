@@ -62,7 +62,8 @@ class BaseInput
 		return {
 			border:"1px solid silver",
 			borderRadius:"5px",
-			padding:"2%"
+			padding:"2%",
+            width:"100%"
 		}
 	}
 	// basic 'onChange' event handler

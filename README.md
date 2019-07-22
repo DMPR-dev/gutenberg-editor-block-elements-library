@@ -141,6 +141,11 @@ Example:
       return [ 'bold', 'italic', 'strikethrough'];
     }
     return input.init("embed_url",props.attributes.embed_type + " URL:");
+07-22-2019: Added an ability to render plain text input(to prevent automatic link parsing / etc, must be used just for plain text), an example:
+
+    var input = new TextInput(props);
+    input.plain = true;
+    return input.init("embed_url",props.attributes.embed_type + " URL:");
 
 # Usage: SELECT INPUT
 Signature:
