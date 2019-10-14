@@ -20,7 +20,16 @@
 {
 	position: relative;
 }
-.image-img-go-up-button, .image-img-go-down-button,.image-img-id-showcase,.image-img-edit-heading
+.list-icon
+{
+	cursor: pointer;
+	transition: 0.5s all;
+}
+.list-icon:hover
+{
+	color:rgba(0,0,0,0.3);
+}
+.list-go-up-button, .list-go-down-button,.image-img-id-showcase,.image-img-edit-heading
 {
 	position: absolute;
 	cursor: pointer;
@@ -37,7 +46,7 @@
     user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
 }
-.image-img-go-up-button:hover, .image-img-go-down-button:hover,.image-img-id-showcase:hover,.image-img-edit-heading:hover
+.list-go-up-button:hover, .list-go-down-button:hover,.image-img-id-showcase:hover,.image-img-edit-heading:hover
 {
 	background-color: black;
 }
@@ -48,13 +57,13 @@
 	top:0;
 	border-bottom-right-radius: 5px;
 }
-.image-img-go-up-button
+.list-go-up-button
 {
 	right:0;
 	top:0;
 	border-bottom-left-radius: 5px;
 }
-.image-img-go-down-button
+.list-go-down-button
 {
 	right:0;
 	bottom:0;
@@ -119,11 +128,12 @@
 	width: 100%;
 	height: 100%;
 	background-color: rgba(0,0,0,0.4);
-	z-index: 9999999;
+	z-index: 999999;
 	top:0px;
 	bottom: 0px;
 	right: 0px;
 	left:0px;
+	pointer-events: all;
 	align-items: center;
     align-self: center;
     align-content: center;

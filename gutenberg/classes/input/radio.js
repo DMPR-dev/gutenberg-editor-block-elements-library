@@ -50,16 +50,19 @@ class RadioGroupInput extends BaseInput
             var buttons = [];
             if(values != undefined)
             {
-                if(values.length > 0)
+                if(1 == 1)
                 {
-                    for(var i = 0; i<values.length; i++)
+                    var vals = Object.values(values);
+                    var keys = Object.keys(values);
+
+                    for(var i = 0; i<vals.length; i++)
                     {
                         // get saved value and set 'checked' property on it
                         // or just set checked property on the first element if saved value is not set
                         var checked = me.props.attributes[name];
                         if(checked == undefined || checked == '')
                         {
-                            checked = values[0].val;
+                            checked = vals[0].val;
                             // and save default value
                             me.props.attributes[name] = checked;
                             Common.set_dummy(me.props);
@@ -68,16 +71,18 @@ class RadioGroupInput extends BaseInput
                         [
                             me.el('div',{style:{whiteSpace:"nowrap"}},
                             [
-                                me.el('input',
-                                {
-                                    type:'radio',
-                                    name:me.my_name,
-                                    style:me.style(),
-                                    value:values[i].val,
-                                    defaultChecked: (checked == values[i].val),
-                                    onChange: (event) => {me.update_attr(me,event)}
-                                }),
-                                me.el('label',{},values[i].label)
+                                me.el('label',{},[
+                                    me.el('input',
+                                    {
+                                        type:'radio',
+                                        name:me.my_name,
+                                        style:me.style(),
+                                        value:vals[i].val,
+                                        defaultChecked: (checked == vals[i].val),
+                                        onChange: (event) => {me.update_attr(me,event)}
+                                    }),
+                                    vals[i].caption
+                                ])
                             ])
                         ];
                         buttons.push(button);

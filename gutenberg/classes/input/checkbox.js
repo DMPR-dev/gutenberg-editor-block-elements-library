@@ -47,15 +47,18 @@ class CheckBoxInput extends BaseInput
         var me = this;
         return this.el('div',{},
             [
-                this.el('input',{ 
+                this.el('label', {labelFor:this.my_name},
+                    [
+                        this.el('input',{ 
                                 type:"checkbox",
                                 defaultChecked: me.props.attributes[name],
                                 name:this.my_name,
                                 id:this.my_name,
                                 style:this.style(),
                                 onChange: (event) => {me.update_attr(me,event)},
-                            }),
-                this.el('label', {labelFor:this.my_name},label_text),
+                        }),
+                        label_text
+                    ]),
             ]);
     }
 }

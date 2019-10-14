@@ -57,7 +57,6 @@ class TextInput extends BaseInput
                                 placeholder:label_text.replace(":",""),
                                 style:this.style(),
                                 name:this.my_name,onChange: (event) => {
-                                    console.log(event.target.value);
                                     me.update_attr(me,event.target.value);
                                 },
                                 defaultValue:me.props.attributes[name]

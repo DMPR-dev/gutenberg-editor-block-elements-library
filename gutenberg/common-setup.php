@@ -2,36 +2,36 @@
 /*
  *
  * 
- * Register library itself & dependencies
+ * Register all scripts
  *
  *
  */
-wp_register_script('_common_baseinput_class',get_template_directory_uri() . '/extensions/gutenberg/classes/input/baseinput.js');
-wp_register_script('_common_basetools_class',get_template_directory_uri() . '/extensions/gutenberg/classes/input/tools/basetools.js');
+wp_register_script('_common_baseinput_class',plugin_dir_url(__FILE__) . '/classes/input/baseinput.js');
+wp_register_script('_common_basetools_class',plugin_dir_url(__FILE__) . '/classes/input/tools/basetools.js');
 
 
-wp_register_script('_common_select_class',get_template_directory_uri() . '/extensions/gutenberg/classes/input/select.js');
-wp_register_script('_common_text_class',get_template_directory_uri() . '/extensions/gutenberg/classes/input/text.js');
-wp_register_script('_common_datetime_class',get_template_directory_uri() . '/extensions/gutenberg/classes/input/datetime.js');
-wp_register_script('_common_image_class',get_template_directory_uri() . '/extensions/gutenberg/classes/input/image.js');
-wp_register_script('_common_color_class',get_template_directory_uri() . '/extensions/gutenberg/classes/input/color.js');
-wp_register_script('_common_checkbox_class',get_template_directory_uri() . '/extensions/gutenberg/classes/input/checkbox.js');
-wp_register_script('_common_radio_class',get_template_directory_uri() . '/extensions/gutenberg/classes/input/radio.js');
-wp_register_script('_common_input_class',get_template_directory_uri() . '/extensions/gutenberg/classes/input/input.js');
+wp_register_script('_common_select_class',plugin_dir_url(__FILE__) . '/classes/input/select.js');
+wp_register_script('_common_text_class',plugin_dir_url(__FILE__) . '/classes/input/text.js');
+wp_register_script('_common_datetime_class',plugin_dir_url(__FILE__) . '/classes/input/datetime.js');
+wp_register_script('_common_image_class',plugin_dir_url(__FILE__) . '/classes/input/image.js');
+wp_register_script('_common_color_class',plugin_dir_url(__FILE__) . '/classes/input/color.js');
+wp_register_script('_common_checkbox_class',plugin_dir_url(__FILE__) . '/classes/input/checkbox.js');
+wp_register_script('_common_radio_class',plugin_dir_url(__FILE__) . '/classes/input/radio.js');
+wp_register_script('_common_input_class',plugin_dir_url(__FILE__) . '/classes/input/input.js');
 
 
-wp_register_script('_common_fontsizepicker_class',get_template_directory_uri() . '/extensions/gutenberg/classes/input/tools/fontsizepicker.js');
-wp_register_script('_common_alignmenttool_class',get_template_directory_uri() . '/extensions/gutenberg/classes/input/tools/aligntool.js');
+wp_register_script('_common_fontsizepicker_class',plugin_dir_url(__FILE__) . '/classes/input/tools/fontsizepicker.js');
+wp_register_script('_common_alignmenttool_class',plugin_dir_url(__FILE__) . '/classes/input/tools/aligntool.js');
 
-wp_register_script('_common_gallery_class',get_template_directory_uri() . '/extensions/gutenberg/classes/gallery/gallery.js');
-wp_register_script('_common_link_class',get_template_directory_uri() . '/extensions/gutenberg/classes/link/link.js');
-wp_register_script('_common_list_class',get_template_directory_uri() . '/extensions/gutenberg/classes/list/list.js');
-wp_register_script('_common_popup_class',get_template_directory_uri() . '/extensions/gutenberg/classes/popup/popup.js');
+wp_register_script('_common_gallery_class',plugin_dir_url(__FILE__) . '/classes/gallery/gallery.js');
+wp_register_script('_common_link_class',plugin_dir_url(__FILE__) . '/classes/link/link.js');
+wp_register_script('_common_list_class',plugin_dir_url(__FILE__) . '/classes/list/list.js');
+wp_register_script('_common_popup_class',plugin_dir_url(__FILE__) . '/classes/popup/popup.js');
 
 
 wp_register_script(
     '_gutenberg-common-lib',
-    get_template_directory_uri() . '/extensions/gutenberg/common.js',
+    plugin_dir_url(__FILE__) . '/common.js',
     array( 
         'wp-blocks', 
         'wp-element', 
@@ -58,7 +58,7 @@ wp_register_script(
 );
 wp_register_style(
     '_gutenberg-common-style',
-    get_template_directory_uri() . '/extensions/gutenberg/common.css'
+    plugin_dir_url(__FILE__) . '/common.css'
 );
 
 ?>

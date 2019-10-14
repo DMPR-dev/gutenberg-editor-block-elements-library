@@ -9,7 +9,7 @@ class Gallery
         }
         else
         {
-            console.log("Unalbe to initialize gallery object because wp is undefined!");
+            console.error("Unalbe to initialize gallery object because wp is undefined!");
             return undefined;
         }
     }
@@ -28,7 +28,6 @@ class Gallery
         if(_variable_name == undefined){console.error("No variable name has been set for gallery. Gallery will work, but it will be unable to save any changes.");}
         this.image_object_sample = object_sample;
         this.variable_name = _variable_name;
-
         return [this.display_images_backend(),this.add_image_btn(),this.render_popup()]
     }
     render_popup()
@@ -296,7 +295,7 @@ class Gallery
             // verify that current index is not the first and add 'up' button
             if(_index != 0)
             {
-                var _button = this.el('div',{className:"image-img-go-up-button",onClick:function()
+                var _button = this.el('div',{className:"list-go-up-button",onClick:function()
                 {
                     me.move_image(jQuery(event.target).attr("image_id"),-1);
                 }, image_id:images[_index].id.val},"UP");
@@ -306,7 +305,7 @@ class Gallery
             // verify that current index is not the last and add 'down' button
             if(_index < images.length - 1)
             {
-                var button = this.el('div',{className:"image-img-go-down-button",onClick:function()
+                var button = this.el('div',{className:"list-go-down-button",onClick:function()
                 {
                     me.move_image(jQuery(event.target).attr("image_id"),1);
                 },image_id:images[_index].id.val},"DOWN");

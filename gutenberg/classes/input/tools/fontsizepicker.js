@@ -4,7 +4,9 @@ class FontSizePickerTool extends BaseTools
 	{
 		super(_props);
 	}
-	// override default callback
+	/*
+		override default callback
+	*/
 	callback(props,object)
 	{
 		if(object.val == undefined || object.val == '')
@@ -24,7 +26,9 @@ class FontSizePickerTool extends BaseTools
 			}
 		}
 	}
-	// default font sizes
+	/*
+		Declare default font sizes
+	*/
 	sizes()
 	{
 		const sizes = [

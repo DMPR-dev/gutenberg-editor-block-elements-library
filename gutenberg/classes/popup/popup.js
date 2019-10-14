@@ -9,7 +9,7 @@ class Popup
         }
         else
         {
-            console.log("Unalbe to initialize gallery object because wp is undefined!");
+            console.error("Unalbe to initialize gallery object because wp is undefined!");
             return undefined;
         }
 	}
@@ -26,14 +26,39 @@ class Popup
     	if(_object_sample != undefined)
         {
             this.options = JSON.parse(JSON.stringify(_object_sample));
-        	return this.render_popup();
+
+            var popup_element = document.createElement("div");
+            this.id = this.generate_id();
+            popup_element.id = this.id;
+            document.body.append(popup_element);
+
+            ReactDOM.render(this.render_popup(),document.getElementById(this.id));
         }
         else
         {
-            console.log("Unalbe to initialize popup object because object sample is undefined!");
+            console.error("Unalbe to initialize popup object because object sample is undefined!");
             return undefined;
         }
     }
+    /*
+        Generates unique ID for current popup object
+
+        @returns string
+    */
+    generate_id()
+    {
+        var id = '_' + Math.random().toString(36).substr(2, 9);
+        if(jQuery("#"+id).length > 0)
+        {
+            return this.generate_id();
+        }
+        return id;
+    }
+    /*
+        Makes ReactJS object that have all needed elements for popup
+
+        @returns reactjs object
+    */
     render_popup()
     {
         var elements = [];
@@ -60,7 +85,8 @@ class Popup
         }
         var me = this;
         return this.el('div',{
-        		className:"common-lib-popup d-none"
+        		className:"common-lib-popup d-none",
+                id: this.id
         	},
         	[this.el('div',{className:"common-lib-popup-items-container"},
         		[
@@ -72,8 +98,16 @@ class Popup
         ]
       );
     }
+    /*
+        Opens popup by ID of current popup object
+
+        @param object - an object sample to generate popup for(with preset values, i.e for editing for example)
+
+        @returns VOID
+    */
     open_popup(object)
     {
+        var id = this.id;
     	if(this.popup_opened())
     	{
     		this.close_popup();
@@ -89,8 +123,17 @@ class Popup
     			jQuery('.common-lib-popup.d-none input[option="'+keys[i]+'"]').val(values[i].val);
     		}
     	}
-    	jQuery(".common-lib-popup.d-none").removeClass("d-none");
+        else
+        {
+            jQuery('.common-lib-popup.d-none input').val("");
+        }
+    	jQuery("#"+id+".common-lib-popup.d-none").removeClass("d-none");
     }
+    /*
+        Allows us to know if ANY of popup is currently opened
+
+        @returns BOOLEAN 
+    */
     popup_opened()
     {
     	return jQuery(".common-lib-popup:not(.d-none)").length > 0;

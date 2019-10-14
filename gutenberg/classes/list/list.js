@@ -28,7 +28,7 @@ class List
             }
             return false;
         }
-        return this.popup.init(this.object_sample);
+        this.popup.init(this.object_sample);
     }
     /*
      *
@@ -43,7 +43,9 @@ class List
         if(_variable_name == undefined){console.error("No variable name has been set for list object. List system will work, but it will be unable to save any changes.");}
         this.variable_name = _variable_name;
         this.object_sample = _object_sample;
-        return [this.display_list(),this.spawn_list_button(),this.render_popup()]
+        this.render_popup();
+
+        return [this.display_list(),this.spawn_list_button()]
     }
     /*
      *
@@ -124,18 +126,19 @@ class List
 	                for(var i = 0; i<list.length;i++)
 	                {
 	                        // generate reactjs object and push it to the array of elements
-	                        var element = this.el('p',{style:{border:"1px dashed silver",margin:"5%",padding:"5%"}},
+	                        var element = this.el('p',{style:{border:"1px dashed silver",margin:"15px",padding:"15px", position:"relative"}},
 	                                        [
-	                                            this.el('span',{className:"links-icon-button dashicons dashicons-edit",onClick:function(event)
+	                                            this.el('span',{className:"list-icon dashicons dashicons-edit",onClick:function(event)
 	                                                {
 	                                                    var id = jQuery(event.target).attr("id");
 	                                                    me.edit_list(id);
 	                                                },id:list[i].id.val}),
-	                                            this.el('span',{className:"dashicons dashicons-trash",onClick:function(event)
+	                                            this.el('span',{className:"list-icon dashicons dashicons-trash",onClick:function(event)
 	                                                {
 	                                                    var id = jQuery(event.target).attr("id");
 	                                                    me.delete_from_list(id);
 	                                                },id:list[i].id.val}),
+                                                this.spawn_move_button(list,i),
 	                                            this.display_object_properties(list[i]),
 	                                        ]);
 	                        elements.push(element);
@@ -289,6 +292,80 @@ class List
                     Common.set_dummy(me.props);
                 }
                 me.popup.open_popup(objects[index]);
+            }
+        }
+    }
+        /*
+     *
+     * Spawns 'up' and 'down' buttons that let user move list object up and down inside of array(change the position of object)
+     *
+     * @return ARRAY OF REACTJS objects
+     *
+     */
+    spawn_move_button(list,_index)
+    {
+        var buttons = [];
+        var me = this;
+        if(list[_index] != undefined)
+        {
+            // verify that current index is not the first and add 'up' button
+            if(_index != 0)
+            {
+                var _button = this.el('div',{className:"list-go-up-button",onClick:function()
+                {
+                    me.move_list_object(jQuery(event.target).attr("object_id"),-1);
+                }, object_id:list[_index].id.val},"UP");
+
+                buttons.push(_button);
+            }
+            // verify that current index is not the last and add 'down' button
+            if(_index < list.length - 1)
+            {
+                var button = this.el('div',{className:"list-go-down-button",onClick:function()
+                {
+                    me.move_list_object(jQuery(event.target).attr("object_id"),1);
+                },object_id:list[_index].id.val},"DOWN");
+
+                buttons.push(button);
+            }
+        }
+        return buttons;
+    }
+    /*
+     *
+     * Allows user to move list object up and down inside of array(change the position of list object)
+     * 1 method execution = 1 position
+     *
+     * @return VOID
+     *
+     */
+    move_list_object (object_id, position)
+    {
+        // validate position ,so image will only be moved on 1 step
+        if(position == 1 || position == -1)
+        {
+            // access list array, store it in temp variable to modify
+            var list = this.props.attributes[this.variable_name];
+            // find needed image that will be moved by given id
+            var needed_object = this.find_needed_item(object_id);
+            if(needed_object != undefined)
+            {
+                // if such image 100% exists in array, then move it
+                var index = list.indexOf(needed_object);
+                if (index > -1) 
+                {
+                    // check if needed index exists(so, we will not move the image if it's the first or the last in array)
+                    if(list[index+position] != undefined)
+                    {
+                        // move objects inside of array
+                        var temp_object = list[index+position];
+                        list[index+position] = needed_object;
+                        list[index] = temp_object;
+
+                        this.props.attributes[this.variable_name] = list;
+                        Common.set_dummy(this.props);
+                    }
+                }
             }
         }
     }
