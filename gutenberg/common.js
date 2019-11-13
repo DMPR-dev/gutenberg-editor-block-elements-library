@@ -41,7 +41,7 @@ class Common
     // sets random dummy, needed for updating of block on editor
     static set_dummy(_props)
     {
-        var random_dummy = Math.random().toString(10);
+        var random_dummy = Math.random().toString(10) + Math.random().toString(10) + Math.random().toString(10) + Math.random().toString(10);
         if(random_dummy != _props.attributes.dummy)
         {
             _props.setAttributes({dummy:random_dummy});
