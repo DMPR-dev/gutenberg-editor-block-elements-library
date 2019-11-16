@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: GutenbergBlocksLibrary
+Plugin Name: Gutenberg Editor Block Elements Library
 Description: Provides intstruments for easier blocks creation
 Version:     0.0.1
 Author:      Dmytro Proskurin
