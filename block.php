@@ -14,15 +14,15 @@ class Block
 	{
 		if(!isset($args["BlockName"]) || strlen($args["BlockName"]) == 0)
 		{
-			return new \WP_ERROR("insuffcient_args",__("BlockName argument was not passed!"));
+			return new \WP_ERROR("insuffcient_args",__("BlockName argument was not passed!", "gutenberg-block-elements-library"));
 		}
 		if(!isset($args["BlockTitle"]) || strlen($args["BlockTitle"]) == 0)
 		{
-			return new \WP_ERROR("insuffcient_args",__("BlockTitle argument was not passed!"));
+			return new \WP_ERROR("insuffcient_args",__("BlockTitle argument was not passed!", "gutenberg-block-elements-library"));
 		}
 		if(!isset($args["RenderCallback"]) || strlen($args["RenderCallback"]) == 0)
 		{
-			return new \WP_ERROR("insuffcient_args",__("RenderCallback argument was not passed!"));
+			return new \WP_ERROR("insuffcient_args",__("RenderCallback argument was not passed!", "gutenberg-block-elements-library"));
 		}
 		return $args;
 	}
@@ -87,6 +87,10 @@ class Block
 		Library::enqueue_js_library();
 
 		wp_register_script($BlockName . '-editor-script', Functions::get_blocks_url($BlockName) . 'end-script.js',array('_gutenberg-common-lib'));
+
+		wp_localize_script($BlockName . '-editor-script','block_translations', array(
+			"configured_on_sidebar" => __( "Block is configured on settings sidebar >>" , "gutenberg-block-elements-library")
+		));
 		/*
 			Preapre styles & scripts
 		*/
@@ -132,7 +136,7 @@ class Block
 			$FolderHandle = mkdir(Functions::get_blocks_path($BlockName),0777,true);
 			if($FolderHandle === FALSE)
 			{
-				throw new \Exception(__("Can not create a folder for block! Please set read-write priviledges to 0777!"));
+				throw new \Exception(__("Can not create a folder for block! Please set read-write priviledges to 0777!", "gutenberg-block-elements-library"));
 			}
 		}
 		return true;
@@ -174,6 +178,7 @@ class Block
 			Declare variables
 		*/
 		$icon = (isset($args["Icon"]) && strlen($args["Icon"]) > 0) ? $args["Icon"] : 'video-alt3';
+
 		$category = (isset($args["Category"]) && strlen($args["Category"]) > 0) ? $args["Category"] : 'widgets';
 	
 		$attributes = self::generate_attributes($args);
@@ -238,7 +243,7 @@ class Block
 			}
 			else if(isset($attributes["Groups"]))
 			{
-				throw new \Exception(__("Invalid settings group passed"));
+				throw new \Exception(__("Invalid settings group passed", "gutenberg-block-elements-library"));
 			}
 			foreach($attributes as $attr)
 			{
@@ -318,7 +323,7 @@ class Block
 		}
 		else if(isset($args["Settings"]) && isset($args["Groups"]))
 		{
-			throw new \Exception(__("Invalid settings group passed"));
+			throw new \Exception(__("Invalid settings group passed", "gutenberg-block-elements-library"));
 		}
 
 		if(is_array($groups) && sizeof($groups) > 0)
@@ -347,7 +352,7 @@ class Block
 	*/
 	public static function write_to_file($filepath,$text)
 	{
-		$file = fopen($filepath, "w") or die(__("Unable to open file").": ".$filepath);
+		$file = fopen($filepath, "w") or die(__("Unable to open file", "gutenberg-block-elements-library").": ".$filepath);
 		fwrite($file, $text);
 		fclose($file);
 		return true;

@@ -43,11 +43,11 @@ class Gallery
             }
             if(field_name.includes("url"))
             {
-                return true;
+                //return true;
             }
             return false;
         }
-        return this.popup.init(this.image_object_sample);
+        return this.popup.init(this.assign_type(this.image_object_sample));
     }
     /*
      *
@@ -123,7 +123,7 @@ class Gallery
                             me.edit(id)
                         }},
                             [
-                            " Edit"
+                            " ", gallery_translations.edit
                             ])
                     ]),
 
@@ -155,7 +155,7 @@ class Gallery
             this.props.attributes[this.variable_name] = [];
         }
 
-        var callback = function(url)
+        var callback = function()
         {
             if(me.image_object_sample != undefined)
             {
@@ -166,7 +166,6 @@ class Gallery
                     me.popup.callback = function()
                     {
                         var new_object = JSON.parse(JSON.stringify(me.image_object_sample));
-                        new_object.url.val = url;
 
                         for(var i = 0; i < keys.length; i++)
                         {
@@ -203,7 +202,7 @@ class Gallery
                 console.error("Unalbe to add image to gallery because image object sample is not set!");
             }
         }
-        com.input.image.init("","",callback,false,event);
+        callback();
     }
     /*
      *
@@ -228,7 +227,7 @@ class Gallery
                     this.el('button',{onClick:function(event)
                         {
                             me.add_image(event);
-                        },className:"custom-block-button components-button editor-post-preview is-button is-default is-large"},"Add Image")
+                        },className:"custom-block-button components-button editor-post-preview is-button is-default is-large"},gallery_translations.add_to_list)
                 ]);
         }
         //spawns 'delete image' button, that lets user delete selected image(image id is stored as linked to 'onClick'
@@ -298,7 +297,7 @@ class Gallery
                 var _button = this.el('div',{className:"list-go-up-button",onClick:function()
                 {
                     me.move_image(jQuery(event.target).attr("image_id"),-1);
-                }, image_id:images[_index].id.val},"UP");
+                }, image_id:images[_index].id.val},gallery_translations.up);
 
                 buttons.push(_button);
             }
@@ -308,7 +307,7 @@ class Gallery
                 var button = this.el('div',{className:"list-go-down-button",onClick:function()
                 {
                     me.move_image(jQuery(event.target).attr("image_id"),1);
-                },image_id:images[_index].id.val},"DOWN");
+                },image_id:images[_index].id.val},gallery_translations.down);
 
                 buttons.push(button);
             }
@@ -380,6 +379,16 @@ class Gallery
                 var keys = Object.keys(images[index])
                 if(values != undefined && keys != undefined && keys.length == values.length)
                 {
+                    me.popup.restricted_fields = function(field_name)
+                    {
+                        field_name = String(field_name);
+
+                        if(field_name.includes("id"))
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
                     me.popup.callback = function()
                     {
                         for(var i = 0; i < keys.length; i++)
@@ -393,10 +402,38 @@ class Gallery
                         Common.set_dummy(me.props);
                     }
                     /* Open popup and append current values */
-                    me.popup.open_popup(needed_object);
+                    me.popup.open_popup(me.assign_type(needed_object));
                 }
             }
         }
+    }
+    /*
+        Appends type to image object input
+
+        @returns OBJECT
+    */
+    assign_type(object)
+    {
+        var values = Object.values(object);
+        var keys = Object.keys(object);
+        if(values != undefined && keys != undefined && keys.length == values.length)
+        {
+            for(var i = 0; i < keys.length; i++)
+            {
+                if(typeof(object[keys[i]].type) == 'undefined')
+                {
+                    if(String(keys[i]).toLowerCase() != String('url').toLowerCase())
+                    {
+                        object[keys[i]].type = 'text';
+                    }
+                    else
+                    {
+                        object[keys[i]].type = 'image';
+                    }
+                }
+            }
+        }
+        return object;
     }
     /*
      *
@@ -419,7 +456,7 @@ class Gallery
             if (index > -1) 
             {
                 // confirm that user is sure about image deletion
-                if(confirm("Are you sure that you want to delete image ID: " + image_id + "?"))
+                if(confirm(gallery_translations.confirm_deletion_from_list))
                 {
                     // delete image from array
                     images.splice(index, 1);

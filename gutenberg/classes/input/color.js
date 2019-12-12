@@ -60,7 +60,7 @@ class ColorInput extends BaseInput
                         me.props.attributes[name] = undefined;
                         Common.set_dummy(me.props);
                     }
-                },"Remove Color");
+                },color_translations.remove_color);
             }
         }
         return [

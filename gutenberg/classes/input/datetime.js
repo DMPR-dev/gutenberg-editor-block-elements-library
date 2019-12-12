@@ -4,6 +4,9 @@ class DateTimeInput extends BaseInput
     {
         super(_props);
     }
+    /*
+        Style can be overriden
+    */
     style()
     {
         return {};

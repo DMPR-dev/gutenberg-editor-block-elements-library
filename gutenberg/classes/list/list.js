@@ -88,11 +88,19 @@ class List
         {
             var values = Object.values(object);
             var keys = Object.keys(object);
-            for (var i =0; i<values.length;i++) 
+
+            for (var i = 0; i< values.length; i++) 
             {
-                if(values[i] != undefined && values[i].val != undefined && values[i].val.toString().length < 64)
+                if(values[i] != undefined && values[i].val != undefined)
                 {
-                    var elem = this.el('p',{className:"long-word-wrap",style:{marginTop:"0px",marginBottom:"0px"}},values[i].caption + " : " + values[i].val);
+                    var cutText = function(text){
+                        if( text.length > 32 )
+                        {
+                            return text.slice(0 , 32) + "...";
+                        }
+                        return text;
+                    };
+                    var elem = this.el('p',{className:"long-word-wrap",style:{marginTop:"0px",marginBottom:"0px"}},values[i].caption + " : " + cutText( values[i].val.toString() ) );
                     elements.push(elem);
                 }
             }
@@ -123,28 +131,31 @@ class List
                 // loop through the list array
                 if(values != undefined && keys != undefined && keys.length == values.length)
 				{
-	                for(var i = 0; i<list.length;i++)
+	                for( var i = 0; i < list.length; i++ )
 	                {
-	                        // generate reactjs object and push it to the array of elements
-	                        var element = this.el('p',{style:{border:"1px dashed silver",margin:"15px",padding:"15px", position:"relative"}},
-	                                        [
-	                                            this.el('span',{className:"list-icon dashicons dashicons-edit",onClick:function(event)
-	                                                {
-	                                                    var id = jQuery(event.target).attr("id");
-	                                                    me.edit_list(id);
-	                                                },id:list[i].id.val}),
-	                                            this.el('span',{className:"list-icon dashicons dashicons-trash",onClick:function(event)
-	                                                {
-	                                                    var id = jQuery(event.target).attr("id");
-	                                                    me.delete_from_list(id);
-	                                                },id:list[i].id.val}),
-                                                this.spawn_move_button(list,i),
-	                                            this.display_object_properties(list[i]),
-	                                        ]);
-	                        elements.push(element);
-	                    }
-	                }
-                }
+	                    // generate reactjs object and push it to the array of elements
+	                    var element = this.el('p',{style:{border:"1px dashed silver", padding:"10px", position:"relative"}},
+	                        [
+	                            this.el('span',{className:"list-icon dashicons dashicons-edit",onClick:function(event)
+	                                {
+	                                    var id = jQuery(event.target).attr("object_id");
+	                                    me.edit_list(id);
+	                                },object_id:list[i].id.val}),
+	                            this.el('span',{className:"list-icon dashicons dashicons-trash",onClick:function(event)
+	                                {
+	                                    var id = jQuery(event.target).attr("object_id");
+	                                    me.delete_from_list(id);
+	                                },object_id:list[i].id.val}),
+                                this.el('span',{ style:{ width:"100%", height: "1px", backgroundColor:"#ddd", display: "block", margin: "5px 0px" } } ),
+                                
+                                this.spawn_move_button(list,i),
+	                            
+                                this.display_object_properties(list[i]),
+	                        ]);
+	                    elements.push(element);
+	               }
+	            }
+            }
         }
         return elements;
     }
@@ -162,7 +173,7 @@ class List
             {
                 me.add_to_list();
             }},
-            "Add To List"
+            list_translations.add_to_list
             )
     };
     /*
@@ -236,7 +247,7 @@ class List
             var list_object = this.find_needed_item(id);
             if(list_object != undefined)
             {
-                var conf = confirm("Are you sure that you want to delete object id:" + id+" from the list?");
+                var conf = confirm(list_translations.confirm_deletion_from_list);
                 if(conf)
                 {
                     var list = this.props.attributes[this.variable_name];
@@ -314,7 +325,7 @@ class List
                 var _button = this.el('div',{className:"list-go-up-button",onClick:function()
                 {
                     me.move_list_object(jQuery(event.target).attr("object_id"),-1);
-                }, object_id:list[_index].id.val},"UP");
+                }, object_id:list[_index].id.val},list_translations.up);
 
                 buttons.push(_button);
             }
@@ -324,7 +335,7 @@ class List
                 var button = this.el('div',{className:"list-go-down-button",onClick:function()
                 {
                     me.move_list_object(jQuery(event.target).attr("object_id"),1);
-                },object_id:list[_index].id.val},"DOWN");
+                },object_id:list[_index].id.val},list_translations.down);
 
                 buttons.push(button);
             }

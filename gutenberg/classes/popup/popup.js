@@ -73,11 +73,37 @@ class Popup
             	{
 	                var element = this.el('div',{style:{width:"100%"}},
 	                	[
-	                		this.el('label',{for:keys[i]},[values[i].caption,":"]),
-		                		this.el('input',{type:"text", style:{width:"100%"}, id:keys[i], option:keys[i], defaultValue:values[i].val, onChange:function(event){
-		                			me.options[jQuery(event.target).attr("option")].val = event.target.value;
-		                		}
-		                	})
+	                		(()=>{
+                                if(values[i].type == 'image')
+                                {
+                                    var img_input = new ImageInput(me.props);
+                                    img_input.update_attr = function(object,val){
+                                        me.options['url'].val = val;
+                                        jQuery('.common-lib-popup:not(.d-none) div.image-input-block-element > img#image' + me.id).attr("src",val);
+                                    };
+                                    img_input.current_src = function(){
+                                        return values[i].val;
+                                    };
+                                    img_input.generate_id = function(){
+                                        return "image" + me.id;
+                                    };
+                                    img_input.render_remove_btn = function(){
+                                        return false;
+                                    };
+                                    return me.el('div',{style:{width:"25%"}},
+                                        [
+                                            img_input.init("","Image")
+                                        ]);
+                                }
+                                else
+                                {
+                                    return [me.el('label',{style:{marginBottom:"0px"}},[values[i].caption,":"]),
+                                        me.el('input',{type:"text", style:{width:"100%"}, id:keys[i], option:keys[i], defaultValue:values[i].val, onChange:function(event){
+                                            me.options[jQuery(event.target).attr("option")].val = event.target.value;
+                                        }
+                                    })];
+                                }
+                            })()
 	                	]);
 	                elements.push(element);
             	}
@@ -120,7 +146,14 @@ class Popup
             var keys = Object.keys(object);
     		for(var i = 0; i < values.length; i++) 
     		{
-    			jQuery('.common-lib-popup.d-none input[option="'+keys[i]+'"]').val(values[i].val);
+                if(values[i].type == 'image')
+                {
+                    jQuery('.common-lib-popup.d-none div.image-input-block-element > img#image' + this.id).attr("src",values[i].val);
+                }
+                else
+                {
+    			     jQuery('.common-lib-popup.d-none input[option="'+keys[i]+'"]').val(values[i].val);
+                }
     		}
     	}
         else

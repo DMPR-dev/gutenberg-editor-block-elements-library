@@ -12,6 +12,34 @@ class ImageInput extends BaseInput
          background:'silver'
       }
     }
+    /*  
+        Generates image id / can be overriden
+    */
+    generate_id()
+    {
+        var id = 'image_' + Math.random().toString(36).substr(2, 9);
+        if(jQuery("#"+id).length > 0)
+        {
+            return this.generate_id();
+        }
+        return id;
+    }
+    /*
+        Override 'current' value if it's passed not from block properties
+
+        @returns STRING (URL)
+    */
+    current_src()
+    {
+        return this.props.attributes[this.my_name];
+    }
+    /*
+        Defines if we render 'remove image' button
+    */
+    render_remove_btn()
+    {
+        return true;
+    }
     /*
      *
      * Generates wp media modal window
@@ -63,6 +91,7 @@ class ImageInput extends BaseInput
             return null;
         }
         var me = this;
+        me.id = this.generate_id();
         var handle_image_change = function (event) 
         {
             me.current_object_container = jQuery(event.target);
@@ -98,39 +127,44 @@ class ImageInput extends BaseInput
             // method that spawns 'remove image' btn if image is set
             var spawn_del_btn = function() 
             {
-                if(me.props.attributes[name] != undefined)
+                if(me.props.attributes[me.my_name] != undefined)
                 {
                     return me.el('button',{className:"custom-block-button components-button editor-post-preview is-button is-default is-large",
                         onClick:function(event)
                         {
-                            var conf = confirm("Are you sure that you want to remove current image?");
+                            var conf = confirm(img_translations.confirm_deletion);
                             if(conf)
                             {
-                                me.props.attributes[name] = undefined;
+                                me.props.attributes[me.my_name] = undefined;
                                 jQuery(event.target).parent().children("div").children("img").removeAttr("src");
                                 Common.set_dummy(me.props);
                             }
                         }
-                    },"Remove Image");
+                    },img_translations.remove_image);
                 }
             }
             return this.el('div',{},
                     [
                         this.el('label',{},label_text),
-                        this.el('div',{style:{width:"100%"}},
+                        this.el('div',{style:{width:"100%"},className:"image-input-block-element"},
                         [
                              this.el('img',{style:this.style(),
-                                src:this.props.attributes[name]
+                                src:this.current_src(),
+                                id:this.id
                             })
                         ]),
                         this.el('button',{
                             className:"custom-block-button components-button editor-post-preview is-button is-default is-large",
                             onClick:handle_image_change, 
                             name:name+"-selector-btn"
-                        },"Select Image"),
+                        },img_translations.add_image),
                         /* REMOVE IMAGE BUTTON */
-                        spawn_del_btn()
-                        
+                        (()=>{
+                            if(this.render_remove_btn())
+                            {
+                                return spawn_del_btn()
+                            }
+                        })()
                     ])
         }
         else

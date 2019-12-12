@@ -15,13 +15,21 @@
     var block_settings = {
         %SETTINGS%
     };
+
+    var icon = '%ICON%';
+
+    if( icon.includes( 'http://' ) || icon.includes( 'https://' ) )
+    {
+        icon = el( 'img' ,{ src:icon, style:{ wicth: "20px", height: "20px" } } );
+    }
+
     var settings_groups = [%SETTINGS_GROUPS%];
     // register our block - js side
     registerBlockType( '%BLOCKNAME%', {
         // PROPERTIES
         title: '%BLOCKTITLE%',
 
-        icon: '%ICON%',
+        icon: icon,
 
         category: '%CATEGORY%',
 
@@ -135,6 +143,7 @@
 
                         var element = el(panelBody,{title:fields[i].Name},
                         [
+                            el('span',{ style:{ width:"100%", height: "1px", backgroundColor:"#ddd", display: "block", margin: "5px 0px" } } ),
                             push_settigs_into_container()
                         ]);
                         elements.push(element);
@@ -142,7 +151,7 @@
                 }
                 return elements;
             };
-            return el('div',{style:{backgroundColor:"rgba(0,0,0,0.05",padding:"15px"}},
+            return el('div',{style:{border:"1px solid silver",padding:"15px"}},
                 [
                     el(fragment,{},
                         [
@@ -153,7 +162,16 @@
                         ]),
                     el("h2",{},"%BLOCKTITLE%"),
                     el("hr"),
-                    generate_settings(block_attributes)
+                    (()=>{
+                        if(Object.keys(block_attributes).length > 1)
+                        {
+                            return generate_settings(block_attributes);
+                        }
+                        else
+                        {
+                            return el("p",{style:{color:"gray"}},block_translations.configured_on_sidebar);
+                        }
+                    })()
                 ])
         },
         // save callback - displayed on the front-end part
@@ -166,4 +184,5 @@
     window.wp.blocks,
     window.wp.element,
     window.wp.components
-)
+);
+

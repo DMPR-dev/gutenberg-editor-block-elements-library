@@ -16,7 +16,7 @@ class SelectInput extends BaseInput
     }
     /*
      *
-     * Generates all needed stuff for simple select input
+     * Generates all needed stuff for simple select input 
      *
      * @name - STRING - name of attribute that will be associated with input value
      *

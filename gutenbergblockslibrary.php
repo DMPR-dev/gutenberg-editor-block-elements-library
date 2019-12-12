@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Gutenberg Editor Block Elements Library
+Plugin Name: Gutenberg Blocks Elements Library
 Description: Provides intstruments for easier blocks creation
-Version:     0.0.1
+Version:     0.0.2
 Author:      Dmytro Proskurin
  *
  */
@@ -14,7 +14,7 @@ class Library
 {
 	public function __construct()
 	{
-
+		load_plugin_textdomain( 'gutenberg-block-elements-library', false, dirname( plugin_basename( __FILE__ ) ) . '/translations/' );
 	}
 	/*
 		Creates a block from passed arguments
@@ -64,7 +64,7 @@ class Library
 
 		@returns VOID
 	*/
-	public function enqueue_js_library()
+	public static function enqueue_js_library()
 	{
 		require_once(plugin_dir_path(__FILE__) . '/gutenberg/common-setup.php');
 	}
