@@ -180,7 +180,7 @@
         },
     } );
 })(
-    window.wp.editor,
+    window.wp.blockEditor,
     window.wp.blocks,
     window.wp.element,
     window.wp.components

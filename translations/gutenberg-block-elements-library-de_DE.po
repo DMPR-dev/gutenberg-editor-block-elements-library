@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-12-05 14:27+0200\n"
-"PO-Revision-Date: 2019-12-06 13:53+0200\n"
+"POT-Creation-Date: 2020-01-30 14:36+0200\n"
+"PO-Revision-Date: 2020-01-30 14:36+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -10,10 +10,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.2\n"
-"X-Poedit-Basepath: .\n"
+"X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e\n"
-"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-0: translations\n"
+"X-Poedit-SearchPath-1: .\n"
 
 #: block.php:17
 msgid "BlockName argument was not passed!"
@@ -30,7 +31,8 @@ msgstr "RenderCallback-Argument wurde nicht übergeben!"
 #: block.php:92
 msgid "Block is configured on settings sidebar >>"
 msgstr ""
-"Dieser Block kann nur über die Einstellungen an der Seite verändert werden >>"
+"Dieser Block kann nur über die Einstellungen an der Seite verändert werden. "
+"Klicken Sie hier um die Einstellungen anzuzeigen >>"
 
 #: block.php:139
 msgid ""
@@ -63,7 +65,7 @@ msgstr "Entfernen Farbe"
 msgid "Add Image"
 msgstr "Bild hinzufügen"
 
-#: gutenberg/common-setup.php:39
+#: gutenberg/common-setup.php:39 gutenberg/common-setup.php:45
 msgid "Remove Image"
 msgstr "Bild entfernen"
 
@@ -71,22 +73,30 @@ msgstr "Bild entfernen"
 msgid "Are you sure that you want to delete this image?"
 msgstr "Sind Sie sicher, dass Sie dieses Bild löschen möchten?"
 
-#: gutenberg/common-setup.php:41
-msgid "Edit"
-msgstr "Bearbeiten"
-
-#: gutenberg/common-setup.php:45 gutenberg/common-setup.php:52
+#: gutenberg/common-setup.php:44 gutenberg/common-setup.php:53
 msgid "Add To List"
 msgstr "Zu Liste hinzufügen"
 
-#: gutenberg/common-setup.php:46 gutenberg/common-setup.php:53
+#: gutenberg/common-setup.php:46 gutenberg/common-setup.php:54
 msgid "Are you sure that you want to delete this object?"
 msgstr "Möchten Sie dieses Objekt wirklich löschen?"
 
-#: gutenberg/common-setup.php:47 gutenberg/common-setup.php:54
+#: gutenberg/common-setup.php:47 gutenberg/common-setup.php:55
 msgid "UP"
 msgstr "OBEN"
 
-#: gutenberg/common-setup.php:48 gutenberg/common-setup.php:55
+#: gutenberg/common-setup.php:48 gutenberg/common-setup.php:56
 msgid "DOWN"
 msgstr "UNTEN"
+
+#: gutenberg/common-setup.php:49
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: gutenberg/common-setup.php:60
+msgid "Save and Close"
+msgstr "Einfügen und schließen"
+
+#: gutenberg/common-setup.php:61
+msgid "Close"
+msgstr "Schließen"

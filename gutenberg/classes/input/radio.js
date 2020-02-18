@@ -38,8 +38,11 @@ class RadioGroupInput extends BaseInput
     init(name,label_text,values)
     {
         this.my_name = name;
-        if(label_text == undefined) {label_text="";}
-        if(name == undefined || name == null)
+        if( typeof label_text === 'undefined' )
+        {
+            label_text = '';
+        }
+        if( typeof name === 'undefined' || name === null ) 
         {
             console.error("Unable to init text input because variable @name is undefined!");
             return null;
@@ -48,45 +51,42 @@ class RadioGroupInput extends BaseInput
         var display_buttons = function()
         {
             var buttons = [];
-            if(values != undefined)
+            if( typeof values !== 'undefined' )
             {
-                if(1 == 1)
-                {
-                    var vals = Object.values(values);
-                    var keys = Object.keys(values);
+                var vals = Object.values(values);
+                var keys = Object.keys(values);
 
-                    for(var i = 0; i<vals.length; i++)
+                for(var i = 0; i<vals.length; i++)
+                {
+                    // get saved value and set 'checked' property on it
+                    // or just set checked property on the first element if saved value is not set
+                    var checked = me.props.attributes[name];
+                    if(checked == undefined || checked == '')
                     {
-                        // get saved value and set 'checked' property on it
-                        // or just set checked property on the first element if saved value is not set
-                        var checked = me.props.attributes[name];
-                        if(checked == undefined || checked == '')
-                        {
-                            checked = vals[0].val;
-                            // and save default value
-                            me.props.attributes[name] = checked;
-                            Common.set_dummy(me.props);
-                        }
-                        var button = 
-                        [
-                            me.el('div',{style:{whiteSpace:"nowrap"}},
-                            [
-                                me.el('label',{},[
-                                    me.el('input',
-                                    {
-                                        type:'radio',
-                                        name:me.my_name,
-                                        style:me.style(),
-                                        value:vals[i].val,
-                                        defaultChecked: (checked == vals[i].val),
-                                        onChange: (event) => {me.update_attr(me,event)}
-                                    }),
-                                    vals[i].caption
-                                ])
-                            ])
-                        ];
-                        buttons.push(button);
+                        checked = vals[0].val;
+                        // and save default value
+                        me.props.attributes[name] = checked;
+                        Common.set_dummy(me.props);
                     }
+                    var button = 
+                    [
+                        me.el('div',{style:{whiteSpace:"nowrap"}},
+                        [
+                            me.el('label',{},[
+                                me.el('input',
+                                {
+                                    type:'radio',
+                                    name:me.my_name,
+                                    style:me.style(),
+                                    value:vals[i].val,
+                                    defaultChecked: (checked == vals[i].val),
+                                    onChange: (event) => {me.update_attr(me,event)}
+                                }),
+                                vals[i].caption
+                            ])
+                        ])
+                    ];
+                    buttons.push(button);
                 }
             }
             return buttons;

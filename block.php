@@ -51,24 +51,24 @@ class Block
 		$RenderCallback = sanitize_text_field($args["RenderCallback"]);
 
 		$CustomScript = null;
-		if(isset($args["CustomScript"]) && sizeof($args["CustomScript"]))
+		if(isset($args["CustomScript"]) && ( ( is_array($args["CustomScript"] ) && sizeof($args["CustomScript"] ) ) || !is_array($args["CustomScript"] ) ) )
 		{
 			$CustomScript = $args["CustomScript"];
 		}
 
 		$CustomStyle = null;
-		if(isset($args["CustomStyle"]) && sizeof($args["CustomStyle"]))
+		if(isset($args["CustomStyle"]) && ( ( is_array($args["CustomStyle"] ) && sizeof($args["CustomStyle"] ) ) || !is_array($args["CustomStyle"] ) ) )
 		{
 			$CustomStyle = $args["CustomStyle"];
 		}
 		$CustomEditorScript = null;
-		if(isset($args["CustomEditorScript"]) && sizeof($args["CustomEditorScript"]))
+		if(isset($args["CustomEditorScript"]) && ( ( is_array($args["CustomEditorScript"] ) && sizeof($args["CustomEditorScript"] ) ) || !is_array($args["CustomEditorScript"] ) ) )
 		{
 			$CustomEditorScript = $args["CustomEditorScript"];
 		}
 
 		$CustomEditorStyle = null;
-		if(isset($args["CustomEditorStyle"]) && sizeof($args["CustomEditorStyle"]))
+		if(isset($args["CustomEditorStyle"]) && ( ( is_array($args["CustomEditorStyle"] ) && sizeof($args["CustomEditorStyle"] ) ) || !is_array($args["CustomEditorStyle"] ) ) )
 		{
 			$CustomEditorStyle = $args["CustomEditorStyle"];
 		}

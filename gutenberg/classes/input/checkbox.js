@@ -38,8 +38,11 @@ class CheckBoxInput extends BaseInput
     init(name,label_text)
     {
         this.my_name = name;
-        if(label_text == undefined) {label_text="";}
-        if(name == undefined || name == null)
+        if( typeof label_text === 'undefined' )
+        {
+            label_text = '';
+        }
+        if( typeof name === 'undefined' || name === null ) 
         {
             console.error("Unable to init text input because variable @name is undefined!");
             return null;

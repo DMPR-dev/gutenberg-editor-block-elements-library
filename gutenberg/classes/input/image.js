@@ -18,7 +18,7 @@ class ImageInput extends BaseInput
     generate_id()
     {
         var id = 'image_' + Math.random().toString(36).substr(2, 9);
-        if(jQuery("#"+id).length > 0)
+        if( jQuery( "#" + id ).length > 0 )
         {
             return this.generate_id();
         }
@@ -83,9 +83,15 @@ class ImageInput extends BaseInput
     init(name,label_text,callback,return_react,event)
     {
         this.my_name = name;
-        if(return_react == undefined) {return_react=true;}
-        if(label_text == undefined) {label_text="";}
-        if(name == undefined || name == null)
+        if( typeof return_react === 'undefined' )
+        {
+            return_react = true;
+        }
+        if( typeof label_text === 'undefined' )
+        {
+            label_text = '';
+        }
+        if( typeof name === 'undefined' || name === null ) 
         {
             console.error("Unable to init image input because variable @name is undefined!");
             return null;

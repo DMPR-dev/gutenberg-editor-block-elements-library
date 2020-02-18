@@ -2,7 +2,7 @@ class Popup
 {
 	constructor(_props)
 	{
-		if(wp != undefined)
+		if( typeof wp !== 'undefined' )
         {
             this.props = _props;
             this.el = wp.element.createElement;
@@ -23,7 +23,7 @@ class Popup
      */
     init(_object_sample)
     {
-    	if(_object_sample != undefined)
+    	if( typeof _object_sample !== 'undefined' )
         {
             this.options = JSON.parse(JSON.stringify(_object_sample));
 
@@ -63,7 +63,7 @@ class Popup
     {
         var elements = [];
         var me = this;
-        if(this.options != undefined)
+        if( typeof this.options !== 'undefined' )
         {
             var values = Object.values(this.options);
             var keys = Object.keys(this.options);
@@ -74,7 +74,7 @@ class Popup
 	                var element = this.el('div',{style:{width:"100%"}},
 	                	[
 	                		(()=>{
-                                if(values[i].type == 'image')
+                                if(values[i].type === 'image')
                                 {
                                     var img_input = new ImageInput(me.props);
                                     img_input.update_attr = function(object,val){
@@ -117,8 +117,8 @@ class Popup
         	[this.el('div',{className:"common-lib-popup-items-container"},
         		[
         			elements,
-        			this.el('button',{className:"common-lib-popup-btn components-button editor-post-publish-button is-button is-default is-primary is-large",onClick:function(){me.save_and_close();}},"Save and Close"),
-        			this.el('button',{className:"common-lib-popup-btn components-button editor-post-publish-button is-button is-default is-large",onClick:function(){me.close_popup();}},"Close")
+        			this.el('button',{className:"common-lib-popup-btn components-button editor-post-publish-button is-button is-default is-primary is-large",onClick:function(){me.save_and_close();}},popup_translations.save_and_close),
+        			this.el('button',{className:"common-lib-popup-btn components-button editor-post-publish-button is-button is-default is-large",onClick:function(){me.close_popup();}},popup_translations.close)
         		]
         	)
         ]

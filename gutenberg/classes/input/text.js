@@ -19,17 +19,24 @@ class TextInput extends BaseInput
      * @return reactjs object
      *
      */
-    init(name,label_text)
+    init(name,label_text,placeholder)
     {
         this.my_name = name;
-        if(label_text == undefined) {label_text="";}
-        if(name == undefined || name == null)
+        if( typeof label_text === 'undefined' )
         {
-            console.error("Unable to init text input because variable @name is undefined!");
+            label_text = '';
+        }
+        if( typeof name === 'undefined' || typeof name === null )
+        {
+            console.error( "Unable to init text input because variable @name is undefined!" );
             return null;
         }
+        if( typeof placeholder === 'undefined' )
+        {
+            placeholder = '';
+        }
         var me = this;
-        if(!this.plain)
+        if( !this.plain )
         {
             return this.el('div',{},
                 [
@@ -37,12 +44,14 @@ class TextInput extends BaseInput
 
                     this.el(this.text_box,{
                                     placeholder:label_text.replace(":",""),
-                                    formattingControls: this.formatting_controls(),
+                                    allowedFormats: this.formatting_controls(),
+                                    withoutInteractiveFormatting: false,
                                     style:this.style(),
                                     name:this.my_name,onChange: (value) => {
                                         me.update_attr(me,value);
                                     }
-                                    ,value:me.props.attributes[name]
+                                    ,value:me.props.attributes[name],
+                                    placeholder:placeholder
                                 })
                 ]);
         }
@@ -59,7 +68,8 @@ class TextInput extends BaseInput
                                 name:this.my_name,onChange: (event) => {
                                     me.update_attr(me,event.target.value);
                                 },
-                                defaultValue:me.props.attributes[name]
+                                defaultValue:me.props.attributes[name],
+                                placeholder:placeholder
                             })
             ]);
         }
@@ -70,15 +80,15 @@ class TextInput extends BaseInput
     */
     formatting_controls()
     {
-        return [ 'bold', 'italic', 'strikethrough' , 'link'];
+        return [ 'core/bold', 'core/italic', 'core/strikethrough' , 'core/link', 'core/image' ];
     }
     // @link https://javascript.ru/php/strip_tags
     strip_tags( str )
     { 
-    // Strip HTML and PHP tags from a string
-    // 
-    // +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+        // Strip HTML and PHP tags from a string
+        // 
+        // +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
 
-    return str.replace(/<\/?[^>]+>/gi, '');
+        return str.replace(/<\/?[^>]+>/gi, '');
     }
 }

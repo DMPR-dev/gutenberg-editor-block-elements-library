@@ -16,9 +16,9 @@ class BaseInput
             throw new TypeError("Unalbe to initialize input object because block properties are undefined!");
             return undefined;
         } 
-        if(wp.editor == undefined)
+        if(wp.blockEditor == undefined)
         {
-            throw new TypeError("Unalbe to initialize input object because wp.editor is undefined!");
+            throw new TypeError("Unalbe to initialize input object because wp.blockEditor is undefined!");
             return undefined;
         }
         if(wp.element == undefined)
@@ -39,11 +39,11 @@ class BaseInput
         
 		this.props = _props;
 		this.el = wp.element.createElement;
-        this.text_box = wp.editor.RichText;
+        this.text_box = wp.blockEditor.RichText;
         this.DateTimePicker = wp.components.DateTimePicker;
         this.ColorPicker = wp.components.ColorPicker;
         this.FontSizePicker = wp.components.FontSizePicker;
-        this.AlignmentToolBar = wp.editor.AlignmentToolbar
+        this.AlignmentToolBar = wp.blockEditor.AlignmentToolbar
 	}
 	//basic init
 	init(name)

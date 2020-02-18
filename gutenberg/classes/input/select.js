@@ -30,10 +30,13 @@ class SelectInput extends BaseInput
     init(name,label_text,values)
     {
         this.my_name = name;
-        if(label_text == undefined) {label_text="";}
-        if(name == undefined || name == null)
+        if( typeof label_text === 'undefined' )
         {
-            console.error("Unable to init select input because variable @name is undefined!");
+            label_text = '';
+        }
+        if( typeof name === 'undefined' || name === null ) 
+        {
+            console.error( "Unable to init select input because variable @name is undefined!" );
             return null;
         }
         var me = this;

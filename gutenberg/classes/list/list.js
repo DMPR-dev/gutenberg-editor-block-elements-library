@@ -1,8 +1,8 @@
 class List
 {
-    constructor(_props)
+    constructor( _props )
     {
-        if(wp != undefined)
+        if( typeof wp !== 'undefined' )
         {
             this.props = _props;
             this.text_box = wp.editor.RichText;
@@ -40,7 +40,10 @@ class List
      */
     init(_variable_name,_object_sample)
     {
-        if(_variable_name == undefined){console.error("No variable name has been set for list object. List system will work, but it will be unable to save any changes.");}
+        if( typeof _variable_name === 'undefined' )
+        {
+            console.error("No variable name has been set for list object. List system will work, but it will be unable to save any changes.");
+        }
         this.variable_name = _variable_name;
         this.object_sample = _object_sample;
         this.render_popup();

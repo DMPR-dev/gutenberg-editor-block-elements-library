@@ -240,7 +240,7 @@ class Gallery
                         function()
                         {
                            me.delete_image(me.props.attributes[me.variable_name][_index].id.val)
-                    },className:"custom-block-button components-button editor-post-preview is-button is-default is-large"},"Delete Image")
+                    },className:"custom-block-button components-button editor-post-preview is-button is-default is-large"},gallery_translations.remove_image)
                 ]);
         }
     }
